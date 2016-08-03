@@ -80,7 +80,7 @@ class App extends React.Component {
 }
 ```
 
-If you use a regular React element as `children` it will be rendered if the query matches. However, please note that when using this API you may end up creating a bunch of elements that won't ever actually be rendered to the page. Thus, the `render` or `children` (as a function) props are the preferred API.
+If you use a regular React element as `children` it will be rendered if the query matches. However, *please note that when using this API you may end up creating a bunch of elements that won't ever actually be rendered to the page*. Thus, the `render` or `children` (as a function) props are the preferred API.
 
 ```js
 import React from 'react'
