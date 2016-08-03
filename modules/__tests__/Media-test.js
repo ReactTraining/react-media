@@ -11,34 +11,66 @@ describe('A <Media>', () => {
   })
 
   describe('with a query that matches', () => {
-    it('renders its child', () => {
-      const query = `(max-width: ${window.innerWidth}px)`
+    describe('and a children element', () => {
+      it('renders its child', () => {
+        const element = (
+          <Media query={`(max-width: ${window.innerWidth}px)`}>
+            <div>hello</div>
+          </Media>
+        )
 
-      render(
-        <Media query={query}>
-          <div>hello</div>
-        </Media>,
-        node,
-        () => {
+        render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/)
-        }
-      )
+        })
+      })
+    })
+
+    describe('and a children function', () => {
+      it('renders its child', () => {
+        const element = (
+          <Media query={`(max-width: ${window.innerWidth}px)`}>
+            {matches => (
+              matches ? <div>hello</div> : <div>goodbye</div>
+            )}
+          </Media>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toMatch(/hello/)
+        })
+      })
     })
   })
 
   describe('with a query that does not match', () => {
-    it('does not render its child', () => {
-      const query = `(min-width: ${window.innerWidth + 1}px)`
+    describe('and a children element', () => {
+      it('renders its child', () => {
+        const element = (
+          <Media query={`(min-width: ${window.innerWidth + 1}px)`}>
+            <div>hello</div>
+          </Media>
+        )
 
-      render(
-        <Media query={query}>
-          <div>hello</div>
-        </Media>,
-        node,
-        () => {
+        render(element, node, () => {
           expect(node.firstChild.innerHTML).toNotMatch(/hello/)
-        }
-      )
+        })
+      })
+    })
+
+    describe('and a children function', () => {
+      it('renders its child', () => {
+        const element = (
+          <Media query={`(min-width: ${window.innerWidth + 1}px)`}>
+            {matches => (
+              matches ? <div>hello</div> : <div>goodbye</div>
+            )}
+          </Media>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toMatch(/goodbye/)
+        })
+      })
     })
   })
 
