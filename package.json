@@ -18,7 +18,7 @@
     "release": "node ./scripts/release.js",
     "prepublish": "node ./scripts/build.js",
     "lint": "eslint modules",
-    "test": "npm run lint"
+    "test": "npm run lint && karma start"
   },
   "peerDependencies": {
     "react": "15.x"
