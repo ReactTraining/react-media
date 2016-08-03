@@ -4,7 +4,7 @@
   "description": "A declarative media query component for React",
   "author": "Michael Jackson",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib",
   "files": [
     "lib"
   ],
