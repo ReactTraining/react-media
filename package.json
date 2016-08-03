@@ -1,7 +1,7 @@
 {
   "name": "react-media",
   "version": "0.1.0",
-  "description": "A declarative media query component for React",
+  "description": "A CSS media query component for React",
   "repository": "mjackson/react-media",
   "author": "Michael Jackson",
   "license": "MIT",
