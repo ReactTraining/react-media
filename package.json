@@ -15,6 +15,7 @@
     "build-lib": "rimraf lib && babel ./modules -d lib",
     "build-umd": "webpack modules/index.js umd/react-media.js",
     "build-min": "webpack -p modules/index.js umd/react-media.min.js",
+    "release": "node ./scripts/release.js",
     "prepublish": "node ./scripts/build.js",
     "lint": "eslint modules",
     "test": "npm run lint"
