@@ -11,10 +11,12 @@ describe('A <Media>', () => {
   })
 
   describe('with a query that matches', () => {
+    const query = `(max-width: ${window.innerWidth}px)`
+
     describe('and a children element', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={`(max-width: ${window.innerWidth}px)`}>
+          <Media query={query}>
             <div>hello</div>
           </Media>
         )
@@ -28,7 +30,7 @@ describe('A <Media>', () => {
     describe('and a children function', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={`(max-width: ${window.innerWidth}px)`}>
+          <Media query={query}>
             {matches => (
               matches ? <div>hello</div> : <div>goodbye</div>
             )}
@@ -40,13 +42,29 @@ describe('A <Media>', () => {
         })
       })
     })
+
+    describe('and a render function', () => {
+      it('renders its child', () => {
+        const element = (
+          <Media query={query} render={() => (
+            <div>hello</div>
+          )}/>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toMatch(/hello/)
+        })
+      })
+    })
   })
 
   describe('with a query that does not match', () => {
+    const query = `(min-width: ${window.innerWidth + 1}px)`
+
     describe('and a children element', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={`(min-width: ${window.innerWidth + 1}px)`}>
+          <Media query={query}>
             <div>hello</div>
           </Media>
         )
@@ -60,7 +78,7 @@ describe('A <Media>', () => {
     describe('and a children function', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={`(min-width: ${window.innerWidth + 1}px)`}>
+          <Media query={query}>
             {matches => (
               matches ? <div>hello</div> : <div>goodbye</div>
             )}
@@ -69,6 +87,34 @@ describe('A <Media>', () => {
 
         render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/goodbye/)
+        })
+      })
+    })
+
+    describe('and a render function', () => {
+      it('does not render', () => {
+        const element = (
+          <Media query={query} render={() => (
+            <div>hello</div>
+          )}/>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
+        })
+      })
+
+      it('does not call the render function', () => {
+        let renderWasCalled = false
+        const element = (
+          <Media query={query} render={() => {
+            renderWasCalled = true
+            return <div/>
+          }}/>
+        )
+
+        render(element, node, () => {
+          expect(renderWasCalled).toBe(false)
         })
       })
     })

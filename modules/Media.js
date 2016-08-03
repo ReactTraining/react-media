@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 class Media extends React.Component {
   static propTypes = {
     query: PropTypes.string.isRequired,
+    render: PropTypes.func,
     children: PropTypes.oneOfType([
       PropTypes.node,
       PropTypes.func
@@ -29,8 +30,11 @@ class Media extends React.Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, render } = this.props
     const { matches } = this.state
+
+    if (matches && render)
+      return render()
 
     if (typeof children === 'function')
       return children(matches)
