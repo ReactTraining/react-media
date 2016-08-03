@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 
 class Media extends React.Component {
   static propTypes = {
-    query: PropTypes.string.isRequired
+    query: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired
   }
 
   state = {
