@@ -1,7 +1,7 @@
 # react-media [![Travis][build-badge]][build] [![npm package][npm-badge]][npm]
 
-[build-badge]: https://img.shields.io/travis/mjackson/react-media/master.svg?style=flat-square
-[build]: https://travis-ci.org/mjackson/react-media
+[build-badge]: https://img.shields.io/travis/ReactTraining/react-media/master.svg?style=flat-square
+[build]: https://travis-ci.org/ReactTraining/react-media
 
 [npm-badge]: https://img.shields.io/npm/v/react-media.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/react-media
