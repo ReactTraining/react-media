@@ -2,6 +2,7 @@
   "name": "react-media",
   "version": "0.0.1",
   "description": "A declarative media query component for React",
+  "repository": "mjackson/react-media",
   "author": "Michael Jackson",
   "license": "MIT",
   "main": "lib",
@@ -39,5 +40,13 @@
     "readline-sync": "^1.4.4",
     "rimraf": "^2.5.4",
     "webpack": "^1.13.1"
-  }
+  },
+  "keywords": [
+    "react",
+    "media",
+    "media query",
+    "query",
+    "css",
+    "responsive"
+  ]
 }
