@@ -1,6 +1,6 @@
 {
   "name": "react-media",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A CSS media query component for React",
   "repository": "ReactTraining/react-media",
   "author": "Michael Jackson",
