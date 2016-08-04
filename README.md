@@ -75,7 +75,7 @@ class App extends React.Component {
       <div>
         <Media query="(max-width: 599px)" render={() => (
           <p>The document is less than 600px wide.</p>
-        )}>
+        )}/>
       </div>
     )
   }
