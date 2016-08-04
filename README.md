@@ -36,28 +36,7 @@ You can find the library on `window.ReactMedia`.
 
 ## Usage
 
-Render a `<Media>` component with a `query` prop whose value is a valid [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries). When the query matches, the component uses its `render` prop to know what to render.
-
-```js
-import React from 'react'
-import { Media } from 'react-media'
-
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Media query="(max-width: 599px)" render={() => (
-          <p>The document is less than 600px wide.</p>
-        )}>
-      </div>
-    )
-  }
-}
-```
-
-The `render` prop is never called if the query does not match.
-
-If you need to decide what to render based on whether or not the query matches, use a function as the value of the `children` prop (i.e. `this.props.children`).
+Render a `<Media>` component with a `query` prop whose value is a valid [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries). The `children` prop should be a function whose only argument will be a boolean flag that indicates whether the media query matches or not.
 
 ```js
 import React from 'react'
@@ -80,7 +59,11 @@ class App extends React.Component {
 }
 ```
 
-If you use a regular React element as `children` it will be rendered if the query matches. However, *please note that when using this API you may end up creating a bunch of elements that won't ever actually be rendered to the page*. Thus, the `render` or `children` (as a function) props are the preferred API.
+If you render a `<Media>` component on the server, it always matches.
+
+If you use a regular React element as `children` it will be rendered if the query matches. However, *you may end up creating a bunch of elements that won't ever actually be rendered to the page* (i.e. you'll do a lot of unnecessary `createElement`s on each `render`). Thus, a `children` **function** is the preferred API.
+
+For the common case of "only render something when the media query matches", you can use a `render` prop that is only called if the query matches.
 
 ```js
 import React from 'react'
@@ -90,15 +73,15 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Media query="(max-width: 599px)">
+        <Media query="(max-width: 599px)" render={() => (
           <p>The document is less than 600px wide.</p>
-        </Media>
+        )}>
       </div>
     )
   }
 }
 ```
 
-If you render a `<Media>` component on the server, it always matches.
+The `render` prop is never called if the query does not match.
 
 That's it :) Enjoy!
