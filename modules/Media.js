@@ -7,7 +7,7 @@ class Media extends React.Component {
     children: PropTypes.oneOfType([
       PropTypes.node,
       PropTypes.func
-    ]).isRequired
+    ])
   }
 
   state = {
