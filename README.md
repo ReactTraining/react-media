@@ -20,10 +20,10 @@ Then with a module bundler like [webpack](https://webpack.github.io/), use as yo
 
 ```js
 // using an ES6 transpiler, like babel
-import { Media } from 'react-media'
+import Media from 'react-media'
 
 // not using an ES6 transpiler
-var Media = require('react-media').Media
+var Media = require('react-media')
 ```
 
 The UMD build is also available on [npmcdn](https://npmcdn.com):
@@ -40,7 +40,7 @@ Render a `<Media>` component with a `query` prop whose value is a valid [CSS med
 
 ```js
 import React from 'react'
-import { Media } from 'react-media'
+import Media from 'react-media'
 
 class App extends React.Component {
   render() {
@@ -67,7 +67,7 @@ For the common case of "only render something when the media query matches", you
 
 ```js
 import React from 'react'
-import { Media } from 'react-media'
+import Media from 'react-media'
 
 class App extends React.Component {
   render() {
