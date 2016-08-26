@@ -45,7 +45,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
     "mocha": "^3.0.0",
-    "pretty-bytes": "^3.0.1",
+    "pretty-bytes": "^4.0.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "readline-sync": "^1.4.4",
