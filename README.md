@@ -84,4 +84,51 @@ class App extends React.Component {
 
 The `render` prop is never called if the query does not match.
 
+## Server-side
+
+If you need to render components on the server you must set `defaultMatches` prop to `true`.
+If you forget it then you may cause a warning from React because the markup is different between client and server.
+
+```js
+import React from 'react'
+import Media from 'react-media'
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Media query="(max-width: 599px)" defaultMatches={true} render={() => (
+          <p>The document is less than 600px wide.</p>
+        )}/>
+      </div>
+    )
+  }
+}
+```
+
+Example result is:
+```html
+<placeholder>
+  <style>
+    [data-react-mediaid-match=0] {
+      display: none;
+    }
+    [data-react-mediaid-unmatch=0] {
+      display: block;
+    }
+    @media (max-width: 599px) {
+      [data-react-mediaid-match=0] {
+        display: block;
+      }
+      [data-react-mediaid-unmatch=0] {
+        display: none;
+      }
+    }
+  </style>
+  <p data-react-mediaid-match=0>The document is less than 600px wide.</p>
+</placeholder>
+```
+
+This result is obtained on source code and at the first render on the client.
+
 That's it :) Enjoy!
