@@ -77,6 +77,8 @@ class Media extends React.Component {
       })
     }
 
+    Media.identifier++
+
     return (<placeholder>
       {StyleElement}
       {MatchElement}

@@ -139,6 +139,8 @@ describe('A <Media>', () => {
       console.error = (message) => {
         throw new Error(message)
       }
+
+      Media.identifier = 0
     })
     afterEach(() => {
       return console.error = cachedConsoleError
@@ -158,6 +160,7 @@ describe('A <Media>', () => {
       </Media>)
       Media.isClient = isClient
 
+      Media.identifier = 0
       node.innerHTML = serverHtml
       render(element, node)
     })
@@ -174,8 +177,8 @@ describe('A <Media>', () => {
       const serverHtml = renderToString(element)
       Media.isClient = isClient
 
+      Media.identifier = 0
       node.innerHTML = serverHtml
-
       render(element, node)
     })
 
@@ -193,8 +196,8 @@ describe('A <Media>', () => {
       const serverHtml = renderToString(element)
       Media.isClient = isClient
 
+      Media.identifier = 0
       node.innerHTML = serverHtml
-
       render(element, node)
     })
   })
