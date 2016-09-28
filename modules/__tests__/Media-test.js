@@ -1,7 +1,8 @@
+/* eslint-disable no-console, no-native-reassign */
 import expect from 'expect'
 import React from 'react'
 import { render } from 'react-dom'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import Media from '../Media'
 
 describe('A <Media>', () => {
@@ -129,6 +130,72 @@ describe('A <Media>', () => {
       )
 
       expect(markup).toMatch(/hello/)
+    })
+  })
+
+  describe('compare render on server with render on client', () => {
+    var cachedConsoleError = console.error
+    beforeEach(() => {
+      console.error = (message) => {
+        throw new Error(message)
+      }
+    })
+    afterEach(() => {
+      return console.error = cachedConsoleError
+    })
+
+    it('with children element', () => {
+      const element = (
+        <Media query="(min-width: 200px)" defaultMatches={true}>
+          <div>hello</div>
+        </Media>
+      )
+
+      const isClient = Media.isClient
+      Media.isClient = false
+      const serverHtml = renderToString(<Media query="(min-width: 200px)" defaultMatches={true}>
+        <div>hello</div>
+      </Media>)
+      Media.isClient = isClient
+
+      node.innerHTML = serverHtml
+      render(element, node)
+    })
+
+    it('with render function', () => {
+      const element = (
+        <Media query="(min-width: 200px)" defaultMatches={true} render={() => (
+          <div>hello</div>
+        )}/>
+      )
+
+      const isClient = Media.isClient
+      Media.isClient = false
+      const serverHtml = renderToString(element)
+      Media.isClient = isClient
+
+      node.innerHTML = serverHtml
+
+      render(element, node)
+    })
+
+    it('with children function', () => {
+      const element = (
+        <Media query="(min-width: 200px)" defaultMatches={true}>
+          {matches => (
+            matches ? <div>hello</div> : <div>goodbye</div>
+          )}
+        </Media>
+      )
+
+      const isClient = Media.isClient
+      Media.isClient = false
+      const serverHtml = renderToString(element)
+      Media.isClient = isClient
+
+      node.innerHTML = serverHtml
+
+      render(element, node)
     })
   })
 })
