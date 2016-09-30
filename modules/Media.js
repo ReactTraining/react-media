@@ -1,15 +1,6 @@
 import React, { PropTypes } from 'react'
 
 class Media extends React.Component {
-  static propTypes = {
-    query: PropTypes.string.isRequired,
-    render: PropTypes.func,
-    children: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.func
-    ])
-  }
-
   state = {
     matches: true
   }
@@ -40,6 +31,17 @@ class Media extends React.Component {
       return children(matches)
 
     return matches ? React.Children.only(children) : null
+  }
+}
+
+if (__DEV__) {
+  Media.propTypes = {
+    query: PropTypes.string.isRequired,
+    render: PropTypes.func,
+    children: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.func
+    ])
   }
 }
 
