@@ -84,7 +84,7 @@ class App extends React.Component {
 
 The `render` prop is never called if the query does not match.
 
-query also accepts JSON(similar to jsx style) and is converted to media query via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage)
+`<Media query>` also accepts an object, similar to React's built-in support for CSS style objects in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
 
 ```js
 import React from 'react'
@@ -94,7 +94,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Media query={{maxWidth: 599}}>
+        <Media query={{ maxWidth: 599 }}>
           {matches => matches ? (
             <p>The document is less than 600px wide.</p>
           ) : (
@@ -107,28 +107,6 @@ class App extends React.Component {
 }
 ```
 
-Pixels are default type, can use em with string.
-
-
-```js
-import React from 'react'
-import Media from 'react-media'
-
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Media query={{minWidth: 100, maxWidth: '20em'}}>
-          {matches => matches ? (
-            <p>The document has max-width of 20em and min-width of 100px.</p>
-          ) : (
-            <p>This document does not.</p>
-          )}
-        </Media>
-      </div>
-    )
-  }
-}
-```
+Please see the [json2mq docs](https://github.com/akiran/json2mq/blob/master/README.md#usage) for more examples of queries you can construct using objects.
 
 That's it :) Enjoy!

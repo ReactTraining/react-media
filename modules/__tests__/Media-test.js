@@ -57,11 +57,11 @@ describe('A <Media>', () => {
       })
     })
 
-    describe('and JSON input', () => {
+    describe('and an object query', () => {
       it('renders its child', () => {
-        const jsonQuery = {maxWidth: window.innerWidth}
+        const query = { maxWidth: window.innerWidth }
         const element = (
-          <Media query={jsonQuery} render={() => (
+          <Media query={query} render={() => (
             <div>hello</div>
           )}/>
         )
@@ -135,11 +135,11 @@ describe('A <Media>', () => {
       })
     })
 
-    describe('and JSON input', () => {
+    describe('and an object query', () => {
       it('does not render its child', () => {
-        const jsonQuery = {minWidth: window.innerWidth + 1}
+        const query = { minWidth: window.innerWidth + 1 }
         const element = (
-          <Media query={jsonQuery} render={() => (
+          <Media query={query} render={() => (
             <div>hello</div>
           )}/>
         )
