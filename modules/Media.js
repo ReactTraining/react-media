@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import json2mq from 'json2mq'
 
 class Media extends React.Component {
   state = {
@@ -9,8 +10,12 @@ class Media extends React.Component {
     this.setState({ matches: this.mediaQueryList.matches })
 
   componentWillMount() {
+    const { query } = this.props
+
     if (typeof window === 'object') {
-      this.mediaQueryList = window.matchMedia(this.props.query)
+      this.mediaQueryList = window.matchMedia(
+        typeof query === 'object' ? json2mq(query) : query
+      )
       this.mediaQueryList.addListener(this.updateMatches)
       this.updateMatches()
     }
@@ -36,7 +41,10 @@ class Media extends React.Component {
 
 if (__DEV__) {
   Media.propTypes = {
-    query: PropTypes.string.isRequired,
+    query: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]).isRequired,
     render: PropTypes.func,
     children: PropTypes.oneOfType([
       PropTypes.node,

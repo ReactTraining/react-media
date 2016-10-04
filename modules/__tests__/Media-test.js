@@ -56,6 +56,22 @@ describe('A <Media>', () => {
         })
       })
     })
+
+    describe('and JSON input', () => {
+      it('renders its child', () => {
+        const jsonQuery = {maxWidth: window.innerWidth}
+        const element = (
+          <Media query={jsonQuery} render={() => (
+            <div>hello</div>
+          )}/>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toMatch(/hello/)
+        })
+      })
+    })
+
   })
 
   describe('with a query that does not match', () => {
@@ -118,6 +134,22 @@ describe('A <Media>', () => {
         })
       })
     })
+
+    describe('and JSON input', () => {
+      it('does not render its child', () => {
+        const jsonQuery = {minWidth: window.innerWidth + 1}
+        const element = (
+          <Media query={jsonQuery} render={() => (
+            <div>hello</div>
+          )}/>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
+        })
+      })
+    })
+
   })
 
   describe('rendered on the server', () => {
