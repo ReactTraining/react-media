@@ -84,7 +84,7 @@ class App extends React.Component {
 
 The `render` prop is never called if the query does not match.
 
-`<Media query>` also accepts an object, similar to React's built-in support for CSS style objects in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
+`<Media query>` also accepts an object, similar to [React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html) in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
 
 ```js
 import React from 'react'
@@ -107,6 +107,6 @@ class App extends React.Component {
 }
 ```
 
-Please see the [json2mq docs](https://github.com/akiran/json2mq/blob/master/README.md#usage) for more examples of queries you can construct using objects.
+Keys of media query objects are camel-cased and numeric values automatically get the `px` suffix. See the [json2mq docs](https://github.com/akiran/json2mq/blob/master/README.md#usage) for more examples of queries you can construct using objects.
 
 That's it :) Enjoy!
