@@ -44,7 +44,8 @@ if (__DEV__) {
   Media.propTypes = {
     query: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.object
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object.isRequired)
     ]).isRequired,
     render: PropTypes.func,
     children: PropTypes.oneOfType([
