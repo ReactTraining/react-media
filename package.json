@@ -33,7 +33,6 @@
     "expect": "^1.20.2",
     "gzip-size": "^3.0.0",
     "in-publish": "^2.0.0",
-    "json2mq": "^0.2.0",
     "karma": "^1.2.0",
     "karma-browserstack-launcher": "^1.0.1",
     "karma-chrome-launcher": "^1.0.1",
@@ -47,6 +46,9 @@
     "react-dom": "^15.3.0",
     "readline-sync": "^1.4.4",
     "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "json2mq": "^0.2.0"
   },
   "keywords": [
     "react",
