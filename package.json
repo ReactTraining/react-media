@@ -5,14 +5,9 @@
   "repository": "ReactTraining/react-media",
   "author": "Michael Jackson",
   "license": "MIT",
-  "main": "lib",
-  "files": [
-    "lib",
-    "umd"
-  ],
   "scripts": {
     "build": "node ./scripts/build.js",
-    "build-lib": "rimraf lib && babel ./modules -d lib --ignore '__tests__'",
+    "build-lib": "babel ./modules -d . --ignore '__tests__'",
     "build-umd": "webpack modules/index.js umd/react-media.js",
     "build-min": "webpack -p modules/index.js umd/react-media.min.js",
     "release": "node ./scripts/release.js",
@@ -51,7 +46,6 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "readline-sync": "^1.4.4",
-    "rimraf": "^2.5.4",
     "webpack": "^1.13.1"
   },
   "keywords": [
