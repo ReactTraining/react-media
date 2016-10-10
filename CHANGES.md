@@ -1,3 +1,9 @@
+## HEAD
+
+- Fixed missing `json2mq` dependency ([#20])
+
+[#20]: https://github.com/ReactTraining/react-media/pull/20
+
 ## [v1.3.0]
 
 - Added support for objects in `<Media query>` ([#18])
