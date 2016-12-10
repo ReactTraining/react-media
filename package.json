@@ -42,7 +42,7 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^3.0.0",
     "pretty-bytes": "^4.0.2",
-    "react": "^15.3.0",
+    "react": "^15.4.1",
     "react-dom": "^15.3.0",
     "readline-sync": "^1.4.4",
     "webpack": "^1.13.1"
