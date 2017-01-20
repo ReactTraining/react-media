@@ -19,7 +19,7 @@
     "react": "15.x || ^0.14.7 "
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
+    "babel-cli": "^6.22.1",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-dev-expression": "^0.2.1",
