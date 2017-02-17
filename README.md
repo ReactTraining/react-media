@@ -19,10 +19,10 @@ Using [npm](https://www.npmjs.com/):
 Then with a module bundler like [webpack](https://webpack.github.io/), use as you would anything else:
 
 ```js
-// using an ES6 transpiler, like babel
+// using ES modules
 import Media from 'react-media'
 
-// not using an ES6 transpiler
+// using CommonJS modules
 var Media = require('react-media')
 ```
 
