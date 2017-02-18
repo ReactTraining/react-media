@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
 import json2mq from 'json2mq'
 
+/**
+ * Conditionally renders based on whether or not a media query matches.
+ */
 class Media extends React.Component {
   static propTypes = {
     query: PropTypes.oneOfType([
@@ -43,13 +46,21 @@ class Media extends React.Component {
     const { children, render } = this.props
     const { matches } = this.state
 
-    if (matches && render)
-      return render()
-
-    if (typeof children === 'function')
-      return children(matches)
-
-    return matches ? React.Children.only(children) : null
+    return (
+      render ? (
+        matches ? render() : null
+      ) : children ? (
+        typeof children === 'function' ? (
+          children(matches)
+        ) : !Array.isArray(children) || children.length ? ( // Preact defaults to empty children array
+          matches ? React.Children.only(children) : null
+        ) : (
+          null
+        )
+      ) : (
+        null
+      )
+    )
   }
 }
 
