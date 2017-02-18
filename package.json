@@ -5,6 +5,13 @@
   "repository": "ReactTraining/react-media",
   "license": "MIT",
   "author": "Michael Jackson",
+  "files": [
+    "Media.js",
+    "README.md",
+    "es",
+    "index.js",
+    "umd"
+  ],
   "scripts": {
     "build": "node ./tools/build.js",
     "clean": "git clean -e '!node_modules' -fdX .",
