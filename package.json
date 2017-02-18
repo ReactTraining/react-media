@@ -14,7 +14,10 @@
     "test": "npm run lint && karma start"
   },
   "peerDependencies": {
-    "react": "15.x || ^0.14.7 "
+    "react": ">=15 || ^0.14.7"
+  },
+  "dependencies": {
+    "json2mq": "^0.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -43,9 +46,6 @@
     "react-dom": "^15.3.0 || ^0.14.7",
     "readline-sync": "^1.4.4",
     "webpack": "^1.13.1"
-  },
-  "dependencies": {
-    "json2mq": "^0.2.0"
   },
   "keywords": [
     "react",
