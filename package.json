@@ -3,8 +3,8 @@
   "version": "1.4.0",
   "description": "A CSS media query component for React",
   "repository": "ReactTraining/react-media",
-  "author": "Michael Jackson",
   "license": "MIT",
+  "author": "Michael Jackson",
   "scripts": {
     "build": "node ./tools/build.js",
     "clean": "git clean -e '!node_modules' -fdX .",
@@ -20,7 +20,7 @@
     "babel-cli": "^6.11.4",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.4",
-    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.3.2",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-1": "^6.5.0",
