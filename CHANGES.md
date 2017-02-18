@@ -1,3 +1,12 @@
+## HEAD
+
+- Add ES modules build
+
+## [v1.4.0]
+> Dec 14, 2016
+
+- Compatibility with React 0.14
+
 ## [v1.3.2]
 > Oct 10, 2016
 
