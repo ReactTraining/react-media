@@ -7,7 +7,6 @@
   "author": "Michael Jackson",
   "files": [
     "Media.js",
-    "README.md",
     "es",
     "index.js",
     "umd"
