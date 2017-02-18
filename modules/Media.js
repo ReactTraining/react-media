@@ -26,16 +26,17 @@ class Media extends React.Component {
     this.setState({ matches: this.mediaQueryList.matches })
 
   componentWillMount() {
+    if (typeof window !== 'object')
+      return
+
     let { query } = this.props
 
     if (typeof query !== 'string')
       query = json2mq(query)
 
-    if (typeof window === 'object') {
-      this.mediaQueryList = window.matchMedia(query)
-      this.mediaQueryList.addListener(this.updateMatches)
-      this.updateMatches()
-    }
+    this.mediaQueryList = window.matchMedia(query)
+    this.mediaQueryList.addListener(this.updateMatches)
+    this.updateMatches()
   }
 
   componentWillUnmount() {
