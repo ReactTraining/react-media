@@ -25,11 +25,63 @@ class Media extends React.Component {
   updateMatches = () =>
     this.setState({ matches: this.mediaQueryList.matches })
 
+  handleMockedMedia = (query) => {
+    this.mockedMediaMatch = true
+    const mockedMedia = this.context.mockedMedia
+    if(!mockedMedia || typeof query !== 'object')
+      return query
+
+    let mockedMediaProperties = []
+    const features = Object.keys(mockedMedia)
+    features.forEach((feature) => {
+      const value = mockedMedia[feature]
+
+      let min = query['min' + feature],
+        exact = query[feature],
+        max = query['max' + feature]
+
+      if(typeof min === 'number') {
+        mockedMediaProperties.push('min' + feature)
+        if(value < min)
+          this.mockedMediaMatch = false
+      }
+
+      if(typeof exact !== 'undefined') {
+        mockedMediaProperties.push(feature)
+        if(value !== exact)
+          this.mockedMediaMatch = false
+      }
+
+      if(typeof max === 'number') {
+        mockedMediaProperties.push('max' + feature)
+        if(value > max) 
+          this.mockedMediaMatch = false
+      }
+    })
+    let rtnQuery = {
+      ...query
+    }
+
+    Object.keys(query)
+    .forEach(function(feature) {
+      if(mockedMediaProperties.includes(feature))
+        delete rtnQuery[feature]
+    })
+
+    return rtnQuery
+   
+  }
+
   componentWillMount() {
+    let query = this.handleMockedMedia(this.props.query)
+    
+    if(!this.mockedMediaMatch) {
+      this.setState({matches: false})
+      return
+    }
+
     if (typeof window !== 'object')
       return
-
-    let { query } = this.props
 
     if (typeof query !== 'string')
       query = json2mq(query)
@@ -63,6 +115,9 @@ class Media extends React.Component {
       )
     )
   }
+}
+Media.contextTypes = {
+  mockedMedia: React.PropTypes.object
 }
 
 export default Media
