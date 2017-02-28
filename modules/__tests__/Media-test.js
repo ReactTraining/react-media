@@ -72,6 +72,47 @@ describe('A <Media>', () => {
       })
     })
 
+    describe('and a queries object', () => {
+      it('renders its child', () => {
+        const queries = { 
+          sm: {
+            maxWidth: window.innerWidth,
+          },
+        }
+        const element = (
+          <Media queries={queries} render={() => (
+            <div>hello</div>
+          )}/>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toMatch(/hello/)
+        })
+      })
+      
+      it('passes matches for each key', () => {
+        const queries = { 
+          sm: {
+            maxWidth: window.innerWidth,
+          },
+          md: {
+            maxWidth: window.innerWidth - 1,
+          },
+        }
+        const element = (
+          <Media queries={queries} render={({ sm, md }) => (
+            {md && <div>goodbye</div>}
+            {sm && <div>hello</div>}
+          )}/>
+        )
+
+        render(element, node, () => {
+          expect(node.firstChild.innerHTML).toMatch(/hello/)
+        })
+      })
+    })
+
+
   })
 
   describe('with a query that does not match', () => {
