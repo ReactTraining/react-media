@@ -81,7 +81,7 @@ class Media extends React.Component {
   }
 
   render() {
-    const { children, render } = this.props
+    const { children, render, queries, query } = this.props
     const { matches } = this.state
 
     return (
@@ -89,7 +89,8 @@ class Media extends React.Component {
         matches ? render() : null
       ) : children ? (
         typeof children === 'function' ? (
-          children(matches)
+          query && children(matches) ||
+          queries && children({ ...matches })
         ) : !Array.isArray(children) || children.length ? ( // Preact defaults to empty children array
           matches ? React.Children.only(children) : null
         ) : (

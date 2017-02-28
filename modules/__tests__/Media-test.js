@@ -100,13 +100,17 @@ describe('A <Media>', () => {
           },
         }
         const element = (
-          <Media queries={queries} render={({ sm, md }) => (
-            <div>
-              {md && 'goodbye'}
-              {sm && 'hello'}
-            </div>
-          )}/>
+          <Media queries={queries}>
+            {({ sm, md }) => (
+              <div>
+                {md && 'goodbye'}
+                {sm && 'hello'}
+              </div>
+            )}
+          </Media>
         )
+
+        console.log(render(element, node))
 
         render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/)
