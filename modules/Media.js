@@ -57,7 +57,7 @@ class Media extends React.Component {
       this.mediaQueryList.addListener(this.updateMatches)
     }
 
-    if (queries && typeof queries === 'object') {
+    if (queries) {
       queries = Object.keys(queries).map(mq => ({
         name: mq, 
         qs: json2mq(queries[mq]),
@@ -73,7 +73,11 @@ class Media extends React.Component {
   }
 
   componentWillUnmount() {
-    this.mediaQueryList.removeListener(this.updateMatches)
+    let { query, queries } = this.props
+    if (query)
+      this.mediaQueryList.removeListener(this.updateMatches)
+    if (queries)
+      this.mediaQueryList.map(ql => ql.mm.removeListener(this.updateMatches))
   }
 
   render() {
