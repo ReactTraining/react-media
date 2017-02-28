@@ -110,8 +110,6 @@ describe('A <Media>', () => {
           </Media>
         )
 
-        console.log(render(element, node))
-
         render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/)
         })

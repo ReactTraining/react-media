@@ -36,7 +36,9 @@ You can find the library on `window.ReactMedia`.
 
 ## Usage
 
-Render a `<Media>` component with a `query` prop whose value is a valid [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries). The `children` prop should be a function whose only argument will be a boolean flag that indicates whether the media query matches or not.
+Render a `<Media>` component with a `query` prop whose value is a valid [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries) or a `queries` prop whose value is an object with keys as the name of your query and values as a vali [CSS media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries). The `children` prop should be a function whose only argument will be a boolean flag that indicates whether the media query matches or not.
+
+with `query`:
 
 ```js
 import React from 'react'
@@ -58,6 +60,41 @@ class App extends React.Component {
   }
 }
 ```
+
+with `queries`:
+
+```js
+import React from 'react'
+import Media from 'react-media'
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Media
+          queries={{
+            small: "(min-width: 300px)"
+            medium: "(min-width: 600px)"
+          }}
+        >
+          {({ small, medium }) => (
+            <div>
+              <p>This always shows.</p>
+              small && (
+                <p>The document is at least 300px wide.</p>
+              )
+              medium && (
+                <p>The document is at least 600px wide.</p>
+              )
+            </div>
+          )}
+        </Media>
+      </div>
+    )
+  }
+}
+```
+
 
 If you render a `<Media>` component on the server, it always matches.
 
@@ -84,7 +121,7 @@ class App extends React.Component {
 
 The `render` prop is never called if the query does not match.
 
-`<Media query>` also accepts an object, similar to [React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html) in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
+`<Media query>` and `<Media queries>` also accepts an object, similar to [React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html) in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
 
 ```js
 import React from 'react'
