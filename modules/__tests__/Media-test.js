@@ -101,8 +101,10 @@ describe('A <Media>', () => {
         }
         const element = (
           <Media queries={queries} render={({ sm, md }) => (
-            {md && <div>goodbye</div>}
-            {sm && <div>hello</div>}
+            <div>
+              {md && 'goodbye'}
+              {sm && 'hello'}
+            </div>
           )}/>
         )
 

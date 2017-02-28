@@ -10,7 +10,14 @@ class Media extends React.Component {
       PropTypes.string,
       PropTypes.object,
       PropTypes.arrayOf(PropTypes.object.isRequired)
-    ]).isRequired,
+    ]),
+    queries: PropTypes.shape({
+      [PropTypes.string]: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object.isRequired)
+      ]),
+    }),
     render: PropTypes.func,
     children: PropTypes.oneOfType([
       PropTypes.node,
@@ -22,20 +29,46 @@ class Media extends React.Component {
     matches: true
   }
 
-  updateMatches = () =>
-    this.setState({ matches: this.mediaQueryList.matches })
+  updateMatches = () => {
+    let { query, queries } = this.props
+    if (query)
+      this.setState({ matches: this.mediaQueryList.matches })
+
+    if (queries)
+      this.setState({
+        matches: this.mediaQueryList.reduce((accumulated, { name, mm }) => ({
+          ...accumulated,
+          [name]: mm.matches,
+        }), {}),
+      })
+  }
 
   componentWillMount() {
     if (typeof window !== 'object')
       return
 
-    let { query } = this.props
+    let { query, queries } = this.props
 
-    if (typeof query !== 'string')
+    if (query && typeof query !== 'string')
       query = json2mq(query)
 
-    this.mediaQueryList = window.matchMedia(query)
-    this.mediaQueryList.addListener(this.updateMatches)
+    if (query) {
+      this.mediaQueryList = window.matchMedia(query)
+      this.mediaQueryList.addListener(this.updateMatches)
+    }
+
+    if (queries && typeof queries === 'object') {
+      queries = Object.keys(queries).map(mq => ({
+        name: mq, 
+        qs: json2mq(queries[mq]),
+      }))
+      this.mediaQueryList = queries.map(mq => ({
+        name: mq.name,
+        mm: window.matchMedia(mq.qs),
+      }))
+      this.mediaQueryList.map(ql => ql.mm.addListener(this.updateMatches))
+    }
+
     this.updateMatches()
   }
 
