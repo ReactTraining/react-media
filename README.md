@@ -38,7 +38,7 @@ You can find the library on `window.ReactMedia`.
 
 Render a `<Media>` component with a `query` prop whose value is a valid [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries). The `children` prop should be a function whose only argument will be a boolean flag that indicates whether the media query matches or not.
 
-```js
+```jsx
 import React from 'react'
 import Media from 'react-media'
 
@@ -65,7 +65,7 @@ If you use a regular React element as `children` (i.e. `<Media><SomethingHere/><
 
 For the common case of "only render something when the media query matches", you can use a `render` prop that is only called if the query matches.
 
-```js
+```jsx
 import React from 'react'
 import Media from 'react-media'
 
@@ -86,7 +86,7 @@ The `render` prop is never called if the query does not match.
 
 `<Media query>` also accepts an object, similar to [React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html) in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
 
-```js
+```jsx
 import React from 'react'
 import Media from 'react-media'
 
