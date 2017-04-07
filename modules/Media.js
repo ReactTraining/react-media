@@ -19,7 +19,7 @@ class Media extends React.Component {
   }
 
   static defaultProps = {
-    defaultMatches: false
+    defaultMatches: true
   }
 
   state = {
