@@ -32,7 +32,12 @@ class Media extends React.Component {
   updateMatches = () => {
     let { query, queries } = this.props
     if (query)
-      this.setState({ matches: this.mediaQueryList.matches })
+      this.setState({
+        matches: this.mediaQueryList.reduce((accumulated, { name, mm }) => ({
+          ...accumulated,
+          [name]: mm.matches,
+        }), {}).match,
+      })
 
     if (queries)
       this.setState({
@@ -53,8 +58,12 @@ class Media extends React.Component {
       query = json2mq(query)
 
     if (query) {
-      this.mediaQueryList = window.matchMedia(query)
-      this.mediaQueryList.addListener(this.updateMatches)
+      this.mediaQueryList = [
+        {
+          name: 'match',
+          mm: window.matchMedia(query),
+        }
+      ]
     }
 
     if (queries) {
@@ -66,17 +75,15 @@ class Media extends React.Component {
         name: mq.name,
         mm: window.matchMedia(mq.qs),
       }))
-      this.mediaQueryList.map(ql => ql.mm.addListener(this.updateMatches))
     }
 
+    this.mediaQueryList.map(ql => ql.mm.addListener(this.updateMatches))
     this.updateMatches()
   }
 
   componentWillUnmount() {
     let { query, queries } = this.props
-    if (query)
-      this.mediaQueryList.removeListener(this.updateMatches)
-    if (queries)
+    if (query || queries)
       this.mediaQueryList.map(ql => ql.mm.removeListener(this.updateMatches))
   }
 
