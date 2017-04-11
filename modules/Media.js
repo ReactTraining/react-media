@@ -18,8 +18,12 @@ class Media extends React.Component {
     ])
   }
 
+  static defaultProps = {
+    defaultMatches: true
+  }
+
   state = {
-    matches: true
+    matches: this.props.defaultMatches
   }
 
   updateMatches = () =>
