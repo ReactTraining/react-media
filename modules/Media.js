@@ -12,11 +12,7 @@ const queryType = PropTypes.oneOfType([
  */
 class Media extends React.Component {
   static propTypes = {
-    query: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object.isRequired)
-    ]),
+    query: queryType,
     queries: PropTypes.objectOf(queryType),
     render: PropTypes.func,
     children: PropTypes.oneOfType([
