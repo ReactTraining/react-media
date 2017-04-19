@@ -13,6 +13,7 @@ const queryType = PropTypes.oneOfType([
  */
 class Media extends React.Component {
   static propTypes = {
+    defaultMatches: PropTypes.bool,
     query: queryType,
     queries: PropTypes.objectOf(queryType),
     render: PropTypes.func,
@@ -69,7 +70,7 @@ class Media extends React.Component {
 
     if (queries) {
       queries = Object.keys(queries).map(mq => ({
-        name: mq, 
+        name: mq,
         qs: json2mq(queries[mq]),
       }))
       this.queries = queries.map(mq => ({
