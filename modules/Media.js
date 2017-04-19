@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import json2mq from 'json2mq'
 
 const queryType = PropTypes.oneOfType([
