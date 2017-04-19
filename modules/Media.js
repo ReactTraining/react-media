@@ -1,6 +1,12 @@
 import React, { PropTypes } from 'react'
 import json2mq from 'json2mq'
 
+const queryType = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.object,
+  PropTypes.arrayOf(PropTypes.object.isRequired)
+])
+
 /**
  * Conditionally renders based on whether or not a media query matches.
  */
@@ -11,13 +17,7 @@ class Media extends React.Component {
       PropTypes.object,
       PropTypes.arrayOf(PropTypes.object.isRequired)
     ]),
-    queries: PropTypes.shape({
-      [PropTypes.string]: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-        PropTypes.arrayOf(PropTypes.object.isRequired)
-      ]),
-    }),
+    queries: PropTypes.objectOf(queryType),
     render: PropTypes.func,
     children: PropTypes.oneOfType([
       PropTypes.node,
