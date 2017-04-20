@@ -20,7 +20,7 @@
     "test": "karma start --single-run"
   },
   "peerDependencies": {
-    "prop-types": "^15.5.8",
+    "prop-types": ">=15",
     "react": ">=15"
   },
   "dependencies": {
