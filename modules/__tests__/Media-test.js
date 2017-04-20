@@ -113,8 +113,8 @@ describe('A <Media>', () => {
         )
 
         render(element, node, () => {
-          expect(Array.from(node.firstChild.classList)).toInclude('hello')
-          expect(Array.from(node.firstChild.classList)).toExclude('goodbye')
+          expect(node.firstChild.classList.contains('hello')).toBe(true)
+          expect(node.firstChild.classList.contains('goodbye')).toBe(false)
         })
       })
     })
