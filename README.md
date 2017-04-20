@@ -78,14 +78,14 @@ class App extends React.Component {
           }}
         >
           {({ small, medium }) => (
-            <div>
-              <p>This always shows.</p>
-              small && (
-                <p>The document is at least 300px wide.</p>
-              )
-              medium && (
-                <p>The document is at least 600px wide.</p>
-              )
+            <div
+              className={[
+                (small ? 'hello' : ''),
+                (medium ? 'goodbye' : ''),
+              ].join(' ')}
+            >
+              At 300px wide, I have a `className` of `hello`. At 600px wide,
+              I have a `className` of `hello goodbye`.
             </div>
           )}
         </Media>
