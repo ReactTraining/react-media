@@ -102,20 +102,22 @@ describe('A <Media>', () => {
         const element = (
           <Media queries={queries}>
             {({ sm, md }) => (
-              <div>
-                {md && 'goodbye'}
-                {sm && 'hello'}
-              </div>
+              <div
+                className={[
+                  (md ? 'goodbye' : ''),
+                  (sm ? 'hello' : ''),
+                ].join(' ')}
+              />
             )}
           </Media>
         )
 
         render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch(/hello/)
+          expect(node.firstChild.classList.contains('hello')).toBe(true)
+          expect(node.firstChild.classList.contains('goodbye')).toBe(false)
         })
       })
     })
-
 
   })
 
