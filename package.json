@@ -39,7 +39,7 @@
     "expect": "^1.20.2",
     "gzip-size": "^3.0.0",
     "in-publish": "^2.0.0",
-    "karma": "^1.2.0",
+    "karma": "^1.6.0",
     "karma-browserstack-launcher": "^1.0.1",
     "karma-chrome-launcher": "^1.0.1",
     "karma-mocha": "^1.1.1",
