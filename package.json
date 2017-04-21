@@ -26,7 +26,7 @@
     "json2mq": "^0.2.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
+    "babel-cli": "^6.22.1",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.3.2",
