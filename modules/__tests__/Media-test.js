@@ -1,4 +1,4 @@
-import expect from 'expect'
+import expect from 'jest-matchers'
 import React from 'react'
 import { render } from 'react-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -74,7 +74,7 @@ describe('A <Media>', () => {
 
     describe('and a queries object', () => {
       it('renders its child', () => {
-        const queries = { 
+        const queries = {
           sm: {
             maxWidth: window.innerWidth,
           },
@@ -89,9 +89,9 @@ describe('A <Media>', () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/)
         })
       })
-      
+
       it('passes matches for each key', () => {
-        const queries = { 
+        const queries = {
           sm: {
             maxWidth: window.innerWidth,
           },
@@ -133,7 +133,7 @@ describe('A <Media>', () => {
         )
 
         render(element, node, () => {
-          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
+          expect(node.firstChild.innerHTML).not.toBeDefined()
         })
       })
     })
@@ -163,7 +163,7 @@ describe('A <Media>', () => {
         )
 
         render(element, node, () => {
-          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
+          expect(node.firstChild.innerHTML).not.toBeDefined()
         })
       })
 
@@ -192,7 +192,7 @@ describe('A <Media>', () => {
         )
 
         render(element, node, () => {
-          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
+          expect(node.firstChild.innerHTML).not.toBeDefined()
         })
       })
     })
