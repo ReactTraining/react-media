@@ -23,7 +23,8 @@
     "react": ">=15 || ^0.14.7"
   },
   "dependencies": {
-    "json2mq": "^0.2.0"
+    "json2mq": "^0.2.0",
+    "prop-types": ">=15"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
