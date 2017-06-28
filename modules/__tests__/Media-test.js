@@ -133,7 +133,7 @@ describe('A <Media>', () => {
         )
 
         render(element, node, () => {
-          expect(node.firstChild.innerHTML).not.toBeDefined()
+          expect(node.firstChild.innerHTML).toBeUndefined()
         })
       })
     })
@@ -163,7 +163,7 @@ describe('A <Media>', () => {
         )
 
         render(element, node, () => {
-          expect(node.firstChild.innerHTML).not.toBeDefined()
+          expect(node.firstChild.innerHTML).toBeUndefined()
         })
       })
 
@@ -192,7 +192,7 @@ describe('A <Media>', () => {
         )
 
         render(element, node, () => {
-          expect(node.firstChild.innerHTML).not.toBeDefined()
+          expect(node.firstChild.innerHTML).toBeUndefined()
         })
       })
     })
