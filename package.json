@@ -38,7 +38,7 @@
     "eslint-plugin-react": "^6.0.0",
     "gzip-size": "^3.0.0",
     "in-publish": "^2.0.0",
-    "jest-matchers": "19.3.0-alpha.85402254",
+    "jest-matchers": "20.1.0-alpha.1",
     "karma": "^1.2.0",
     "karma-browserstack-launcher": "^1.0.1",
     "karma-chrome-launcher": "^1.0.1",
