@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "node ./tools/build.js",
-    "clean": "git clean -e '!node_modules' -fdX .",
+    "clean": "git clean -fdX .",
     "prepublish": "node ./tools/build.js",
     "release": "node ./tools/release.js",
     "lint": "eslint modules",
