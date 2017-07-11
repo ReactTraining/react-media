@@ -1,6 +1,6 @@
 {
   "name": "react-media",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "A CSS media query component for React",
   "repository": "ReactTraining/react-media",
   "license": "MIT",
