@@ -7,6 +7,7 @@ import json2mq from 'json2mq'
  */
 class Media extends React.Component {
   static propTypes = {
+    defaultMatches: PropTypes.bool,
     query: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
