@@ -1,27 +1,43 @@
-import expect from 'expect'
 import React from 'react'
-import { render } from 'react-dom'
-import { renderToStaticMarkup } from 'react-dom/server'
+import ReactDOM from 'react-dom'
+import ReactDOMServer from 'react-dom/server'
 import Media from '../Media'
 
+const createMockMediaMatcher = (matches) => () => ({
+  matches,
+  addListener: () => {},
+  removeListener: () => {}
+})
+
 describe('A <Media>', () => {
+  let originalMatchMedia
+  beforeEach(() => {
+    originalMatchMedia = window.matchMedia
+  })
+
+  afterEach(() => {
+    window.matchMedia = originalMatchMedia
+  })
+
   let node
   beforeEach(() => {
     node = document.createElement('div')
   })
 
   describe('with a query that matches', () => {
-    const query = `(max-width: ${window.innerWidth}px)`
+    beforeEach(() => {
+      window.matchMedia = createMockMediaMatcher(true)
+    })
 
     describe('and a children element', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={query}>
+          <Media query="">
             <div>hello</div>
           </Media>
         )
 
-        render(element, node, () => {
+        ReactDOM.render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/)
         })
       })
@@ -30,14 +46,14 @@ describe('A <Media>', () => {
     describe('and a children function', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={query}>
+          <Media query="">
             {matches => (
               matches ? <div>hello</div> : <div>goodbye</div>
             )}
           </Media>
         )
 
-        render(element, node, () => {
+        ReactDOM.render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/)
         })
       })
@@ -46,47 +62,33 @@ describe('A <Media>', () => {
     describe('and a render function', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={query} render={() => (
+          <Media query="" render={() => (
             <div>hello</div>
           )}/>
         )
 
-        render(element, node, () => {
+        ReactDOM.render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/)
         })
       })
     })
-
-    describe('and an object query', () => {
-      it('renders its child', () => {
-        const query = { maxWidth: window.innerWidth }
-        const element = (
-          <Media query={query} render={() => (
-            <div>hello</div>
-          )}/>
-        )
-
-        render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch(/hello/)
-        })
-      })
-    })
-
   })
 
   describe('with a query that does not match', () => {
-    const query = `(min-width: ${window.innerWidth + 1}px)`
+    beforeEach(() => {
+      window.matchMedia = createMockMediaMatcher(false)
+    })
 
     describe('and a children element', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={query}>
+          <Media query="">
             <div>hello</div>
           </Media>
         )
 
-        render(element, node, () => {
-          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
+        ReactDOM.render(element, node, () => {
+          expect(node.firstChild.innerHTML || '').not.toMatch(/hello/)
         })
       })
     })
@@ -94,14 +96,14 @@ describe('A <Media>', () => {
     describe('and a children function', () => {
       it('renders its child', () => {
         const element = (
-          <Media query={query}>
+          <Media query="">
             {matches => (
               matches ? <div>hello</div> : <div>goodbye</div>
             )}
           </Media>
         )
 
-        render(element, node, () => {
+        ReactDOM.render(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/goodbye/)
         })
       })
@@ -109,53 +111,30 @@ describe('A <Media>', () => {
 
     describe('and a render function', () => {
       it('does not render', () => {
-        const element = (
-          <Media query={query} render={() => (
-            <div>hello</div>
-          )}/>
-        )
-
-        render(element, node, () => {
-          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
-        })
-      })
-
-      it('does not call the render function', () => {
         let renderWasCalled = false
         const element = (
-          <Media query={query} render={() => {
+          <Media query="" render={() => {
             renderWasCalled = true
-            return <div/>
+            return <div>hello</div>
           }}/>
         )
 
-        render(element, node, () => {
+        ReactDOM.render(element, node, () => {
+          expect(node.firstChild.innerHTML || '').not.toMatch(/hello/)
           expect(renderWasCalled).toBe(false)
         })
       })
     })
-
-    describe('and an object query', () => {
-      it('does not render its child', () => {
-        const query = { minWidth: window.innerWidth + 1 }
-        const element = (
-          <Media query={query} render={() => (
-            <div>hello</div>
-          )}/>
-        )
-
-        render(element, node, () => {
-          expect(node.firstChild.innerHTML).toNotMatch(/hello/)
-        })
-      })
-    })
-
   })
 
   describe('rendered on the server', () => {
+    beforeEach(() => {
+      window.matchMedia = createMockMediaMatcher(true)
+    })
+
     it('renders its child', () => {
-      const markup = renderToStaticMarkup(
-        <Media query="(min-width: 200px)">
+      const markup = ReactDOMServer.renderToStaticMarkup(
+        <Media query="">
           <div>hello</div>
         </Media>
       )
