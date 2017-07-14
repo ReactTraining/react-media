@@ -14,7 +14,7 @@
   "scripts": {
     "build": "node ./tools/build.js",
     "clean": "git clean -fdX .",
-    "prepublish": "node ./tools/build.js",
+    "prepublishOnly": "node ./tools/build.js",
     "release": "node ./tools/release.js",
     "lint": "eslint modules",
     "test": "jest"
@@ -39,7 +39,6 @@
     "eslint-plugin-jest": "^20.0.3",
     "eslint-plugin-react": "^6.0.0",
     "gzip-size": "^3.0.0",
-    "in-publish": "^2.0.0",
     "jest": "^20.0.4",
     "pretty-bytes": "^4.0.2",
     "react": "^15.4.1 || ^0.14.7",
