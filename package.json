@@ -1,16 +1,11 @@
 {
   "name": "react-media",
   "version": "1.6.1",
-  "description": "A CSS media query component for React",
+  "description": "CSS media queries for React",
   "repository": "ReactTraining/react-media",
   "license": "MIT",
   "author": "Michael Jackson",
-  "files": [
-    "Media.js",
-    "es",
-    "index.js",
-    "umd"
-  ],
+  "files": ["Media.js", "es", "index.js", "umd"],
   "scripts": {
     "build": "node ./tools/build.js",
     "clean": "git clean -fdX .",
@@ -46,14 +41,7 @@
     "readline-sync": "^1.4.4",
     "webpack": "^1.13.1"
   },
-  "keywords": [
-    "react",
-    "media",
-    "media query",
-    "query",
-    "css",
-    "responsive"
-  ],
+  "keywords": ["react", "media", "media query", "query", "css", "responsive"],
   "prettier": {
     "printWidth": 100,
     "semi": false
