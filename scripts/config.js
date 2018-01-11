@@ -19,7 +19,7 @@ const getPlugins = env => {
     babel({
       exclude: "node_modules/**",
       babelrc: false,
-      presets: [["es2015", { loose: true, modules: false }], "stage-1", "react"],
+      presets: [["env", { loose: true, modules: false }], "stage-1", "react"],
       plugins: ["external-helpers"].concat(
         env === "production" ? ["dev-expression", "transform-react-remove-prop-types"] : []
       )
