@@ -1,5 +1,5 @@
-es
 node_modules
+
+cjs
+esm
 umd
-/*.js
-!webpack.config.js

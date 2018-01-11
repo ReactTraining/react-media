@@ -5,12 +5,19 @@
   "repository": "ReactTraining/react-media",
   "license": "MIT",
   "author": "Michael Jackson",
-  "files": ["Media.js", "es", "index.js", "umd"],
+  "files": [
+    "cjs",
+    "esm",
+    "umd"
+  ],
+  "main": "cjs/react-media.js",
+  "module": "esm/react-media.js",
+  "unpkg": "umd/react-media.js",
   "scripts": {
-    "build": "node ./tools/build.js",
+    "build": "node ./scripts/build.js",
     "clean": "git clean -fdX .",
-    "prepublishOnly": "node ./tools/build.js",
-    "release": "node ./tools/release.js",
+    "prepublishOnly": "node ./scripts/build.js",
+    "release": "node ./scripts/release.js",
     "lint": "eslint modules",
     "test": "jest"
   },
@@ -24,8 +31,9 @@
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-eslint": "^7.0.0",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-react-remove-prop-types": "^0.3.2",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.12",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-1": "^6.5.0",
@@ -35,13 +43,26 @@
     "eslint-plugin-react": "^6.0.0",
     "gzip-size": "^3.0.0",
     "jest": "^20.0.4",
+    "pascal-case": "^2.0.1",
     "pretty-bytes": "^4.0.2",
     "react": "^15.4.1 || ^0.14.7",
     "react-dom": "^15.3.0 || ^0.14.7",
     "readline-sync": "^1.4.4",
-    "webpack": "^1.13.1"
+    "rollup": "^0.53.4",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.2",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-uglify": "^2.0.1"
   },
-  "keywords": ["react", "media", "media query", "query", "css", "responsive"],
+  "keywords": [
+    "react",
+    "media",
+    "media query",
+    "query",
+    "css",
+    "responsive"
+  ],
   "prettier": {
     "printWidth": 100,
     "semi": false
