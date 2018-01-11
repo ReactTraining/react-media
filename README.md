@@ -133,8 +133,10 @@ If you're curious about how react-media differs from
 [react-responsive](https://github.com/contra/react-responsive), please see
 [this comment](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260).
 
+Enjoy!
+
 ## About
 
-Development of react-media is done by [React Training](https://reacttraining.com). If you're
+`react-media` is developed and maintained by [React Training](https://reacttraining.com). If you're
 interested in learning more about what React can do for your company, please
 [get in touch](mailto:hello@reacttraining.com)!
