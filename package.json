@@ -62,9 +62,5 @@
     "query",
     "css",
     "responsive"
-  ],
-  "prettier": {
-    "printWidth": 100,
-    "semi": false
-  }
+  ]
 }

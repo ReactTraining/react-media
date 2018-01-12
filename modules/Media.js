@@ -1,6 +1,6 @@
-import React from "react"
-import PropTypes from "prop-types"
-import json2mq from "json2mq"
+import React from "react";
+import PropTypes from "prop-types";
+import json2mq from "json2mq";
 
 /**
  * Conditionally renders based on whether or not a media query matches.
@@ -15,37 +15,37 @@ class Media extends React.Component {
     ]).isRequired,
     render: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
-  }
+  };
 
   static defaultProps = {
     defaultMatches: true
-  }
+  };
 
   state = {
     matches: this.props.defaultMatches
-  }
+  };
 
-  updateMatches = () => this.setState({ matches: this.mediaQueryList.matches })
+  updateMatches = () => this.setState({ matches: this.mediaQueryList.matches });
 
   componentWillMount() {
-    if (typeof window !== "object") return
+    if (typeof window !== "object") return;
 
-    let { query } = this.props
+    let { query } = this.props;
 
-    if (typeof query !== "string") query = json2mq(query)
+    if (typeof query !== "string") query = json2mq(query);
 
-    this.mediaQueryList = window.matchMedia(query)
-    this.mediaQueryList.addListener(this.updateMatches)
-    this.updateMatches()
+    this.mediaQueryList = window.matchMedia(query);
+    this.mediaQueryList.addListener(this.updateMatches);
+    this.updateMatches();
   }
 
   componentWillUnmount() {
-    this.mediaQueryList.removeListener(this.updateMatches)
+    this.mediaQueryList.removeListener(this.updateMatches);
   }
 
   render() {
-    const { children, render } = this.props
-    const { matches } = this.state
+    const { children, render } = this.props;
+    const { matches } = this.state;
 
     return render
       ? matches ? render() : null
@@ -55,8 +55,8 @@ class Media extends React.Component {
           : !Array.isArray(children) || children.length // Preact defaults to empty children array
             ? matches ? React.Children.only(children) : null
             : null
-        : null
+        : null;
   }
 }
 
-export default Media
+export default Media;
