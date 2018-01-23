@@ -19,8 +19,7 @@ class Media extends React.Component {
   };
 
   static defaultProps = {
-    defaultMatches: true,
-    targetWindow: window
+    defaultMatches: true
   };
 
   state = {
@@ -31,7 +30,7 @@ class Media extends React.Component {
 
   componentWillMount() {
     let { query } = this.props;
-    const { targetWindow } = this.props;
+    const targetWindow = this.props.targetWindow || window;
 
     if (typeof targetWindow !== "object") return;
 
