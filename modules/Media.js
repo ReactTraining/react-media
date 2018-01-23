@@ -29,10 +29,9 @@ class Media extends React.Component {
   updateMatches = () => this.setState({ matches: this.mediaQueryList.matches });
 
   componentWillMount() {
-    let { query } = this.props;
-
     if (typeof window !== "object") return;
 
+    let { query } = this.props;
     const targetWindow = this.props.targetWindow || window;
 
     if (!targetWindow.matchMedia) {
