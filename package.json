@@ -8,7 +8,8 @@
   "files": [
     "cjs",
     "esm",
-    "umd"
+		"umd",
+		"index.d.ts"
   ],
   "main": "cjs/react-media.js",
   "module": "esm/react-media.js",
