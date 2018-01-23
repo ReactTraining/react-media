@@ -30,9 +30,10 @@ class Media extends React.Component {
 
   componentWillMount() {
     let { query } = this.props;
-    const targetWindow = this.props.targetWindow || window;
 
-    if (typeof targetWindow !== "object") return;
+    if (typeof window !== "object") return;
+
+    const targetWindow = this.props.targetWindow || window;
 
     if (!targetWindow.matchMedia) {
       throw new Error(
