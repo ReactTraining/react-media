@@ -129,6 +129,11 @@ Keys of media query objects are camel-cased and numeric values automatically get
 See the [json2mq docs](https://github.com/akiran/json2mq/blob/master/README.md#usage) for more
 examples of queries you can construct using objects.
 
+An optional `targetWindow` prop can be specified if you want the `query` to be
+evaluated against a different window object than the one the code is running in.
+This can be useful for example if you are rendering part of your component tree
+to an iframe or [a popup window](https://hackernoon.com/using-a-react-16-portal-to-do-something-cool-2a2d627b0202).
+
 If you're curious about how react-media differs from
 [react-responsive](https://github.com/contra/react-responsive), please see
 [this comment](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260).

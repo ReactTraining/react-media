@@ -122,6 +122,44 @@ describe("A <Media>", () => {
     });
   });
 
+  describe("when a custom targetWindow prop is passed", () => {
+    beforeEach(() => {
+      window.matchMedia = createMockMediaMatcher(true);
+    });
+
+    it("renders its child", () => {
+      const testWindow = {
+        matchMedia: createMockMediaMatcher(false)
+      };
+
+      const element = (
+        <Media query="" targetWindow={testWindow}>
+          {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
+        </Media>
+      );
+
+      ReactDOM.render(element, node, () => {
+        expect(node.firstChild.innerHTML).toMatch(/goodbye/);
+      });
+    });
+
+    describe("when a non-window prop is passed for targetWindow", () => {
+      it("errors with a useful message", () => {
+        const notAWindow = {};
+
+        const element = (
+          <Media query="" targetWindow={notAWindow}>
+            {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
+          </Media>
+        );
+
+        expect(() => {
+          ReactDOM.render(element, node, () => {});
+        }).toThrow("does not have a `matchMedia` function");
+      });
+    })
+  });
+
   describe("rendered on the server", () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(true);

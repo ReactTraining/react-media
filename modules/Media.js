@@ -14,7 +14,8 @@ class Media extends React.Component {
       PropTypes.arrayOf(PropTypes.object.isRequired)
     ]).isRequired,
     render: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func])
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    targetWindow: PropTypes.object
   };
 
   static defaultProps = {
@@ -31,10 +32,17 @@ class Media extends React.Component {
     if (typeof window !== "object") return;
 
     let { query } = this.props;
+    const targetWindow = this.props.targetWindow || window;
+
+    if (!targetWindow.matchMedia) {
+      throw new Error(
+        'You passed a `targetWindow` prop to `Media` that does not have a `matchMedia` function.'
+      );
+    }
 
     if (typeof query !== "string") query = json2mq(query);
 
-    this.mediaQueryList = window.matchMedia(query);
+    this.mediaQueryList = targetWindow.matchMedia(query);
     this.mediaQueryList.addListener(this.updateMatches);
     this.updateMatches();
   }
