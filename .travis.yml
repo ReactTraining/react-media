@@ -10,7 +10,7 @@ env:
   - NPM_TAG=$([[ "$TRAVIS_TAG" == *-* ]] && echo "next" || echo "latest")
 deploy:
   provider: npm
-  email: mjijackson@gmail.com
+  email: npm@mjackson.me
   api_key: "$NPM_TOKEN"
   tag: "$NPM_TAG"
   skip_cleanup: true
