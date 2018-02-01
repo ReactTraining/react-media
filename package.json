@@ -15,9 +15,8 @@
   "unpkg": "umd/react-media.js",
   "scripts": {
     "build": "node ./scripts/build.js",
-    "clean": "git clean -fdX .",
     "prepublishOnly": "node ./scripts/build.js",
-    "release": "node ./scripts/release.js",
+    "clean": "git clean -fdX .",
     "lint": "eslint modules",
     "test": "jest"
   },
@@ -47,7 +46,6 @@
     "pretty-bytes": "^4.0.2",
     "react": "^15.4.1 || ^0.14.7",
     "react-dom": "^15.3.0 || ^0.14.7",
-    "readline-sync": "^1.4.4",
     "rollup": "^0.53.4",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
