@@ -4,7 +4,7 @@ const replace = require("rollup-plugin-replace");
 const resolve = require("rollup-plugin-node-resolve");
 const uglify = require("rollup-plugin-uglify");
 
-const getPlugins = env => {
+function getPlugins(env) {
   const plugins = [resolve()];
 
   if (env) {
@@ -36,7 +36,7 @@ const getPlugins = env => {
   }
 
   return plugins;
-};
+}
 
 const config = {
   input: "modules/index.js",
