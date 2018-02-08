@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import invariant from "invariant";
 import json2mq from "json2mq";
 
 /**
@@ -31,15 +32,14 @@ class Media extends React.Component {
   componentWillMount() {
     if (typeof window !== "object") return;
 
-    let { query } = this.props;
     const targetWindow = this.props.targetWindow || window;
 
-    if (!targetWindow.matchMedia) {
-      throw new Error(
-        'You passed a `targetWindow` prop to `Media` that does not have a `matchMedia` function.'
-      );
-    }
+    invariant(
+      typeof targetWindow.matchMedia === "function",
+      "<Media targetWindow> does not support `matchMedia`."
+    );
 
+    let { query } = this.props;
     if (typeof query !== "string") query = json2mq(query);
 
     this.mediaQueryList = targetWindow.matchMedia(query);

@@ -155,9 +155,9 @@ describe("A <Media>", () => {
 
         expect(() => {
           ReactDOM.render(element, node, () => {});
-        }).toThrow("does not have a `matchMedia` function");
+        }).toThrow("does not support `matchMedia`");
       });
-    })
+    });
   });
 
   describe("rendered on the server", () => {
