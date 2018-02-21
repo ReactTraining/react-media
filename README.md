@@ -117,6 +117,8 @@ An optional `targetWindow` prop can be specified if you want the `query` to be e
 
 If you're curious about how react-media differs from [react-responsive](https://github.com/contra/react-responsive), please see [this comment](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260).
 
+Check out for a live example [here](https://codesandbox.io/s/73k3kx4200)
+
 Enjoy!
 
 ## About
