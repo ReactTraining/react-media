@@ -1153,8 +1153,7 @@ var Media = function (_React$Component) {
       Context.Consumer,
       null,
       function (mounted) {
-        // const match = mounted ? matches : defaultMatches;
-        var match = defaultMatches;
+        var match = mounted ? matches : defaultMatches;
 
         return render ? match ? render() : null : children ? typeof children === 'function' ? children(match) : !Array.isArray(children) || children.length // Preact defaults to empty children array
         ? match ? React.Children.only(children) : null : null : null;
