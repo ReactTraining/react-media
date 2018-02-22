@@ -1,18 +1,18 @@
 {
-  "name": "react-media",
+  "name": "react-universal-media",
   "version": "1.8.0",
-  "description": "CSS media queries for React",
-  "repository": "ReactTraining/react-media",
+  "description": "Universal CSS media queries for React",
+  "repository": "hyperlab/react-universal-media",
   "license": "MIT",
-  "author": "Michael Jackson",
+  "author": "Michael Jackson, Alfred Ringstad",
   "files": [
     "cjs",
     "esm",
     "umd"
   ],
-  "main": "cjs/react-media.js",
-  "module": "esm/react-media.js",
-  "unpkg": "umd/react-media.js",
+  "main": "cjs/react-universal-media.js",
+  "module": "esm/react-universal-media.js",
+  "unpkg": "umd/react-universal-media.js",
   "scripts": {
     "build": "node ./scripts/build.js",
     "prepublishOnly": "node ./scripts/build.js",
@@ -24,6 +24,7 @@
     "react": ">=15 || ^0.14.7"
   },
   "dependencies": {
+    "create-react-context": "^0.1.6",
     "invariant": "^2.2.2",
     "json2mq": "^0.2.0",
     "prop-types": "^15.5.10"

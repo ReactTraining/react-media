@@ -1,7 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import invariant from "invariant";
-import json2mq from "json2mq";
+import React from 'react';
+import PropTypes from 'prop-types';
+import invariant from 'invariant';
+import json2mq from 'json2mq';
+import Context from './Context';
 
 /**
  * Conditionally renders based on whether or not a media query matches.
@@ -30,17 +31,17 @@ class Media extends React.Component {
   updateMatches = () => this.setState({ matches: this.mediaQueryList.matches });
 
   componentWillMount() {
-    if (typeof window !== "object") return;
+    if (typeof window !== 'object') return;
 
     const targetWindow = this.props.targetWindow || window;
 
     invariant(
-      typeof targetWindow.matchMedia === "function",
-      "<Media targetWindow> does not support `matchMedia`."
+      typeof targetWindow.matchMedia === 'function',
+      '<Media targetWindow> does not support `matchMedia`.'
     );
 
     let { query } = this.props;
-    if (typeof query !== "string") query = json2mq(query);
+    if (typeof query !== 'string') query = json2mq(query);
 
     this.mediaQueryList = targetWindow.matchMedia(query);
     this.mediaQueryList.addListener(this.updateMatches);
@@ -52,18 +53,27 @@ class Media extends React.Component {
   }
 
   render() {
-    const { children, render } = this.props;
+    const { children, render, defaultMatches } = this.props;
     const { matches } = this.state;
 
-    return render
-      ? matches ? render() : null
-      : children
-        ? typeof children === "function"
-          ? children(matches)
-          : !Array.isArray(children) || children.length // Preact defaults to empty children array
-            ? matches ? React.Children.only(children) : null
-            : null
-        : null;
+    return (
+      <Context.Consumer>
+        {mounted => {
+          // const match = mounted ? matches : defaultMatches;
+          const match = defaultMatches;
+
+          return render
+            ? match ? render() : null
+            : children
+              ? typeof children === 'function'
+                ? children(match)
+                : !Array.isArray(children) || children.length // Preact defaults to empty children array
+                  ? match ? React.Children.only(children) : null
+                  : null
+              : null;
+        }}
+      </Context.Consumer>
+    );
   }
 }
 
