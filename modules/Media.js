@@ -59,8 +59,7 @@ class Media extends React.Component {
     return (
       <Context.Consumer>
         {mounted => {
-          // const match = mounted ? matches : defaultMatches;
-          const match = defaultMatches;
+          const match = mounted ? matches : defaultMatches;
 
           return render
             ? match ? render() : null
