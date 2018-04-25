@@ -1,5 +1,11 @@
-import React from 'react';
-import createReactContext from 'create-react-context';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var React = require('react');
+var React__default = _interopDefault(React);
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -1010,7 +1016,7 @@ var json2mq = function (query) {
 
 var json2mq_1 = json2mq;
 
-var Context = createReactContext(false);
+var Context = React.createContext(false);
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
@@ -1143,20 +1149,20 @@ var Media = function (_React$Component) {
     var matches = this.state.matches;
 
 
-    return React.createElement(
+    return React__default.createElement(
       Context.Consumer,
       null,
       function (mounted) {
         var match = mounted ? matches : defaultMatches;
 
         return render ? match ? render() : null : children ? typeof children === 'function' ? children(match) : !Array.isArray(children) || children.length // Preact defaults to empty children array
-        ? match ? React.Children.only(children) : null : null : null;
+        ? match ? React__default.Children.only(children) : null : null : null;
       }
     );
   };
 
   return Media;
-}(React.Component);
+}(React__default.Component);
 
 Media.propTypes = {
   defaultMatches: propTypes.bool,
@@ -1169,13 +1175,13 @@ Media.defaultProps = {
   defaultMatches: true
 };
 
-var UniversalMediaProvider = function (_React$Component) {
-  inherits(UniversalMediaProvider, _React$Component);
+var MediaProvider = function (_React$Component) {
+  inherits(MediaProvider, _React$Component);
 
-  function UniversalMediaProvider() {
+  function MediaProvider() {
     var _temp, _this, _ret;
 
-    classCallCheck(this, UniversalMediaProvider);
+    classCallCheck(this, MediaProvider);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -1186,19 +1192,19 @@ var UniversalMediaProvider = function (_React$Component) {
     }, _temp), possibleConstructorReturn(_this, _ret);
   }
 
-  UniversalMediaProvider.prototype.componentDidMount = function componentDidMount() {
+  MediaProvider.prototype.componentDidMount = function componentDidMount() {
     this.setState({ mounted: true });
   };
 
-  UniversalMediaProvider.prototype.render = function render() {
+  MediaProvider.prototype.render = function render() {
     var mounted = this.state.mounted;
 
 
-    return React.createElement(Context.Provider, _extends({ value: mounted }, this.props));
+    return React__default.createElement(Context.Provider, _extends({ value: mounted }, this.props));
   };
 
-  return UniversalMediaProvider;
-}(React.Component);
+  return MediaProvider;
+}(React__default.Component);
 
-export { UniversalMediaProvider };
-export default Media;
+exports['default'] = Media;
+exports.MediaProvider = MediaProvider;

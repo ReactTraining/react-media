@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 
-class UniversalMediaProvider extends React.Component {
+class MediaProvider extends React.Component {
   state = {
     mounted: false
   };
@@ -18,4 +18,4 @@ class UniversalMediaProvider extends React.Component {
   }
 }
 
-export default UniversalMediaProvider;
+export default MediaProvider;

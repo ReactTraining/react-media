@@ -23,25 +23,25 @@ console.log("\nBuilding CommonJS modules...");
 
 exec(`rollup -c scripts/config.js -f cjs -o cjs/${packageName}.js`);
 
-// console.log("\nBuilding UMD modules...");
+console.log("\nBuilding UMD modules...");
 
-// const varName = pascalCase(packageName);
+const varName = pascalCase(packageName);
 
-// exec(
-//   `rollup -c scripts/config.js -f umd -n ${varName} -o umd/${packageName}.js`,
-//   {
-//     BUILD_ENV: "development"
-//   }
-// );
+exec(
+  `rollup -c scripts/config.js -f umd -n ${varName} -o umd/${packageName}.js`,
+  {
+    BUILD_ENV: "development"
+  }
+);
 
-// exec(
-//   `rollup -c scripts/config.js -f umd -n ${varName} -o umd/${packageName}.min.js`,
-//   {
-//     BUILD_ENV: "production"
-//   }
-// );
+exec(
+  `rollup -c scripts/config.js -f umd -n ${varName} -o umd/${packageName}.min.js`,
+  {
+    BUILD_ENV: "production"
+  }
+);
 
-// console.log(
-//   "\nThe minified, gzipped UMD build is %s",
-//   prettyBytes(gzipSize.sync(fs.readFileSync(`umd/${packageName}.min.js`)))
-// );
+console.log(
+  "\nThe minified, gzipped UMD build is %s",
+  prettyBytes(gzipSize.sync(fs.readFileSync(`umd/${packageName}.min.js`)))
+);

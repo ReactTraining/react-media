@@ -1,2 +1,2 @@
-import createReactContext from 'create-react-context';
-export default createReactContext(false);
+import { createContext } from 'react';
+export default createContext(false);

@@ -1,2 +1,2 @@
 export default from './Media';
-export { default as UniversalMediaProvider } from './UniversalMediaProvider';
+export { default as MediaProvider } from './Provider';

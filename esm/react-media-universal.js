@@ -1,11 +1,4 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var React = _interopDefault(require('react'));
-var createReactContext = _interopDefault(require('create-react-context'));
+import React, { createContext } from 'react';
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -1016,7 +1009,7 @@ var json2mq = function (query) {
 
 var json2mq_1 = json2mq;
 
-var Context = createReactContext(false);
+var Context = createContext(false);
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
@@ -1175,13 +1168,13 @@ Media.defaultProps = {
   defaultMatches: true
 };
 
-var UniversalMediaProvider = function (_React$Component) {
-  inherits(UniversalMediaProvider, _React$Component);
+var MediaProvider = function (_React$Component) {
+  inherits(MediaProvider, _React$Component);
 
-  function UniversalMediaProvider() {
+  function MediaProvider() {
     var _temp, _this, _ret;
 
-    classCallCheck(this, UniversalMediaProvider);
+    classCallCheck(this, MediaProvider);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -1192,19 +1185,19 @@ var UniversalMediaProvider = function (_React$Component) {
     }, _temp), possibleConstructorReturn(_this, _ret);
   }
 
-  UniversalMediaProvider.prototype.componentDidMount = function componentDidMount() {
+  MediaProvider.prototype.componentDidMount = function componentDidMount() {
     this.setState({ mounted: true });
   };
 
-  UniversalMediaProvider.prototype.render = function render() {
+  MediaProvider.prototype.render = function render() {
     var mounted = this.state.mounted;
 
 
     return React.createElement(Context.Provider, _extends({ value: mounted }, this.props));
   };
 
-  return UniversalMediaProvider;
+  return MediaProvider;
 }(React.Component);
 
-exports['default'] = Media;
-exports.UniversalMediaProvider = UniversalMediaProvider;
+export { MediaProvider };
+export default Media;

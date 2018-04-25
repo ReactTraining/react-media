@@ -45,7 +45,7 @@ const config = {
       react: "React"
     }
   },
-  external: ["react", "create-react-context"],
+  external: ["react"],
   plugins: getPlugins(process.env.BUILD_ENV)
 };
 
