@@ -1,7 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import ReactDOMServer from "react-dom/server";
-import Media from "../Media";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
+import Media from '../Media';
+import Provider from '../Provider';
 
 const createMockMediaMatcher = matches => () => ({
   matches,
@@ -9,7 +10,7 @@ const createMockMediaMatcher = matches => () => ({
   removeListener: () => {}
 });
 
-describe("A <Media>", () => {
+describe('A <Media>', () => {
   let originalMatchMedia;
   beforeEach(() => {
     originalMatchMedia = window.matchMedia;
@@ -21,16 +22,16 @@ describe("A <Media>", () => {
 
   let node;
   beforeEach(() => {
-    node = document.createElement("div");
+    node = document.createElement('div');
   });
 
-  describe("with a query that matches", () => {
+  describe('with a query that matches', () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(true);
     });
 
-    describe("and a children element", () => {
-      it("renders its child", () => {
+    describe('and a children element', () => {
+      it('renders its child', () => {
         const element = (
           <Media query="">
             <div>hello</div>
@@ -43,8 +44,8 @@ describe("A <Media>", () => {
       });
     });
 
-    describe("and a children function", () => {
-      it("renders its child", () => {
+    describe('and a children function', () => {
+      it('renders its child', () => {
         const element = (
           <Media query="">
             {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
@@ -57,8 +58,8 @@ describe("A <Media>", () => {
       });
     });
 
-    describe("and a render function", () => {
-      it("renders its child", () => {
+    describe('and a render function', () => {
+      it('renders its child', () => {
         const element = <Media query="" render={() => <div>hello</div>} />;
 
         ReactDOM.render(element, node, () => {
@@ -68,13 +69,13 @@ describe("A <Media>", () => {
     });
   });
 
-  describe("with a query that does not match", () => {
+  describe('with a query that does not match', () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(false);
     });
 
-    describe("and a children element", () => {
-      it("renders its child", () => {
+    describe('and a children element', () => {
+      it('renders its child', () => {
         const element = (
           <Media query="">
             <div>hello</div>
@@ -82,13 +83,15 @@ describe("A <Media>", () => {
         );
 
         ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML || "").not.toMatch(/hello/);
+          expect(
+            (node.firstChild && node.firstChild.innerHTML) || ''
+          ).not.toMatch(/hello/);
         });
       });
     });
 
-    describe("and a children function", () => {
-      it("renders its child", () => {
+    describe('and a children function', () => {
+      it('renders its child', () => {
         const element = (
           <Media query="">
             {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
@@ -101,8 +104,8 @@ describe("A <Media>", () => {
       });
     });
 
-    describe("and a render function", () => {
-      it("does not render", () => {
+    describe('and a render function', () => {
+      it('does not render', () => {
         let renderWasCalled = false;
         const element = (
           <Media
@@ -115,19 +118,21 @@ describe("A <Media>", () => {
         );
 
         ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML || "").not.toMatch(/hello/);
+          expect(
+            (node.firstChild && node.firstChild.innerHTML) || ''
+          ).not.toMatch(/hello/);
           expect(renderWasCalled).toBe(false);
         });
       });
     });
   });
 
-  describe("when a custom targetWindow prop is passed", () => {
+  describe('when a custom targetWindow prop is passed', () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(true);
     });
 
-    it("renders its child", () => {
+    it('renders its child', () => {
       const testWindow = {
         matchMedia: createMockMediaMatcher(false)
       };
@@ -143,8 +148,8 @@ describe("A <Media>", () => {
       });
     });
 
-    describe("when a non-window prop is passed for targetWindow", () => {
-      it("errors with a useful message", () => {
+    describe('when a non-window prop is passed for targetWindow', () => {
+      it('errors with a useful message', () => {
         const notAWindow = {};
 
         const element = (
@@ -155,17 +160,35 @@ describe("A <Media>", () => {
 
         expect(() => {
           ReactDOM.render(element, node, () => {});
-        }).toThrow("does not support `matchMedia`");
+        }).toThrow('does not support `matchMedia`');
+      });
+    });
+
+    describe('when using the MediaProvider', () => {
+      it('respects defaultMatches on the first render', () => {
+        const element = (
+          <Provider>
+            <Media query="" defaultMatches={false}>
+              <div>hello</div>
+            </Media>
+          </Provider>
+        );
+
+        ReactDOM.render(element, node, () => {
+          expect((node.firstChild && node.firstChild.innerHTML) || '').not.toMatch(
+            /hello/
+          );
+        });
       });
     });
   });
 
-  describe("rendered on the server", () => {
+  describe('rendered on the server', () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(true);
     });
 
-    it("renders its child", () => {
+    it('renders its child', () => {
       const markup = ReactDOMServer.renderToStaticMarkup(
         <Media query="">
           <div>hello</div>

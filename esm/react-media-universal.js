@@ -1009,7 +1009,7 @@ var json2mq = function (query) {
 
 var json2mq_1 = json2mq;
 
-var Context = createContext(false);
+var Context = createContext(true);
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;

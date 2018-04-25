@@ -59,15 +59,19 @@ class Media extends React.Component {
     return (
       <Context.Consumer>
         {mounted => {
-          const match = mounted ? matches : defaultMatches;
+          const shouldRender = mounted ? matches : defaultMatches;
 
           return render
-            ? match ? render() : null
+            ? shouldRender
+              ? render()
+              : null
             : children
               ? typeof children === 'function'
-                ? children(match)
+                ? children(shouldRender)
                 : !Array.isArray(children) || children.length // Preact defaults to empty children array
-                  ? match ? React.Children.only(children) : null
+                  ? shouldRender
+                    ? React.Children.only(children)
+                    : null
                   : null
               : null;
         }}

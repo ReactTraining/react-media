@@ -1,6 +1,6 @@
 {
   "name": "react-media-universal",
-  "version": "1.8.0",
+  "version": "2.0.0",
   "description": "Universal CSS media queries for React",
   "repository": "hyperlab/react-media-universal",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "react": ">=15 || ^0.14.7"
+    "react": "^16.3.0"
   },
   "dependencies": {
     "invariant": "^2.2.2",
@@ -45,8 +45,8 @@
     "jest": "^20.0.4",
     "pascal-case": "^2.0.1",
     "pretty-bytes": "^4.0.2",
-    "react": "^15.4.1 || ^0.14.7",
-    "react-dom": "^15.3.0 || ^0.14.7",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
     "rollup": "^0.53.4",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",

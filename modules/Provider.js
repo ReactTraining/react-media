@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Context from './Context';
 
 class MediaProvider extends React.Component {
