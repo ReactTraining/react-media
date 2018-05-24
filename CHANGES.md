@@ -1,3 +1,10 @@
+## [v2.0.2]
+> May 25, 2018
+
+- Add MediaProvider for proper React 16 hydration support
+
+[v2.0.2]: https://github.com/hyperlab/react-media-universal/compare/v1.5.0...v2.0.2
+
 ## [v1.5.0]
 > Feb 17, 2017
 

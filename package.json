@@ -1,6 +1,6 @@
 {
   "name": "react-media-universal",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Universal CSS media queries for React",
   "repository": "hyperlab/react-media-universal",
   "license": "MIT",
