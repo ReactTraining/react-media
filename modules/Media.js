@@ -54,16 +54,16 @@ class Media extends React.Component {
   render() {
     const { children, render } = this.props;
     const { matches } = this.state;
-
-    return render
-      ? matches ? render() : null
-      : children
-        ? typeof children === "function"
-          ? children(matches)
-          : !Array.isArray(children) || children.length // Preact defaults to empty children array
-            ? matches ? React.Children.only(children) : null
-            : null
-        : null;
+    if (render && matches) {
+      return render ()
+    }
+    else if (children && typeof children === "function") {
+      return children(matches)
+    }
+    else if ((!Array.isArray(children) || children.length) && matches) {
+      return React.Children.only(children)
+    }
+    return null
   }
 }
 
