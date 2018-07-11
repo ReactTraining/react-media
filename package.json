@@ -8,10 +8,12 @@
   "files": [
     "cjs",
     "esm",
-    "umd"
+    "umd",
+    "typings"
   ],
   "main": "cjs/react-media.js",
   "module": "esm/react-media.js",
+  "typings": "typings/index.d.ts",
   "unpkg": "umd/react-media.js",
   "scripts": {
     "build": "node ./scripts/build.js",
