@@ -3,10 +3,14 @@ import ReactDOM from "react-dom";
 import ReactDOMServer from "react-dom/server";
 import Media from "../Media";
 
-const createMockMediaMatcher = matches => () => ({
+const createMockMediaMatcher = (
   matches,
-  addListener: () => {},
-  removeListener: () => {}
+  addListener = () => {},
+  removeListener = () => {}
+) => () => ({
+  matches,
+  addListener,
+  removeListener
 });
 
 describe("A <Media>", () => {
@@ -156,6 +160,30 @@ describe("A <Media>", () => {
         expect(() => {
           ReactDOM.render(element, node, () => {});
         }).toThrow("does not support `matchMedia`");
+      });
+    });
+  });
+
+  describe("when an onQueryStateChange function is passed", () => {
+    const mockAddListener = jest.fn();
+    beforeEach(() => {
+      window.matchMedia = createMockMediaMatcher(true, mockAddListener);
+    });
+
+    afterEach(() => {
+      mockAddListener.mockClear();
+    });
+
+    it("adds the function as a listener to the media query", () => {
+      const callback = () => {};
+      const element = (
+        <Media query="" onQueryStateChange={callback}>
+          {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
+        </Media>
+      );
+
+      ReactDOM.render(element, node, () => {
+        expect(mockAddListener).toHaveBeenCalledWith(callback);
       });
     });
   });

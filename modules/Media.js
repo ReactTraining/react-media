@@ -16,7 +16,8 @@ class Media extends React.Component {
     ]).isRequired,
     render: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    targetWindow: PropTypes.object
+    targetWindow: PropTypes.object,
+    onQueryStateChange: PropTypes.func
   };
 
   static defaultProps = {
@@ -43,12 +44,23 @@ class Media extends React.Component {
     if (typeof query !== "string") query = json2mq(query);
 
     this.mediaQueryList = targetWindow.matchMedia(query);
+
+    const { onQueryStateChange } = this.props;
+    if (onQueryStateChange) {
+      this.mediaQueryList.addListener(onQueryStateChange);
+    }
+
     this.mediaQueryList.addListener(this.updateMatches);
     this.updateMatches();
   }
 
   componentWillUnmount() {
     this.mediaQueryList.removeListener(this.updateMatches);
+
+    const { onQueryStateChange } = this.props;
+    if (onQueryStateChange) {
+      this.mediaQueryList.removeListener(onQueryStateChange);
+    }
   }
 
   render() {
