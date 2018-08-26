@@ -3,39 +3,46 @@ import PropTypes from "prop-types";
 import invariant from "invariant";
 import json2mq from "json2mq";
 
+const queryType = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.object,
+  PropTypes.arrayOf(PropTypes.object.isRequired)
+]);
+
 /**
  * Conditionally renders based on whether or not a media query matches.
  */
 class Media extends React.Component {
   static propTypes = {
-    defaultMatches: PropTypes.bool,
-    query: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object.isRequired)
-    ]).isRequired,
+    defaultMatches: PropTypes.objectOf(PropTypes.bool),
+    queries: PropTypes.objectOf(queryType).isRequired,
     render: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     targetWindow: PropTypes.object,
     onChange: PropTypes.func
   };
 
-  static defaultProps = {
-    defaultMatches: true
-  };
+  queries = [];
 
   state = {
-    matches: this.props.defaultMatches
+    matches:
+      this.props.defaultMatches ||
+      Object.keys(this.props.queries).reduce(
+        (acc, key) => ({ ...acc, [key]: true }),
+        {}
+      )
   };
 
   updateMatches = () => {
-    const { matches } = this.mediaQueryList;
-
-    this.setState({ matches });
+    const newMatches = this.queries.reduce(
+      (acc, { name, mqList }) => ({ ...acc, [name]: mqList.matches }),
+      {}
+    );
+    this.setState({ matches: newMatches });
 
     const { onChange } = this.props;
     if (onChange) {
-      onChange(matches);
+      onChange(newMatches);
     }
   };
 
@@ -49,32 +56,49 @@ class Media extends React.Component {
       "<Media targetWindow> does not support `matchMedia`."
     );
 
-    let { query } = this.props;
-    if (typeof query !== "string") query = json2mq(query);
+    const { queries } = this.props;
 
-    this.mediaQueryList = targetWindow.matchMedia(query);
-    this.mediaQueryList.addListener(this.updateMatches);
+    this.queries = Object.keys(queries).map(name => {
+      const query = queries[name];
+      const qs = typeof query !== "string" ? json2mq(query) : query;
+      const mqList = targetWindow.matchMedia(qs);
+
+      mqList.addListener(this.updateMatches);
+
+      return { name, qs, mqList };
+    });
+
     this.updateMatches();
   }
 
   componentWillUnmount() {
-    this.mediaQueryList.removeListener(this.updateMatches);
+    this.queries.forEach(({ mqList }) =>
+      mqList.removeListener(this.updateMatches)
+    );
   }
 
   render() {
     const { children, render } = this.props;
     const { matches } = this.state;
 
+    const isAnyMatches = Object.keys(matches).some(key => matches[key]);
+
     return render
-      ? matches
-        ? render()
+      ? isAnyMatches
+        ? render(matches)
         : null
       : children
         ? typeof children === "function"
           ? children(matches)
-          : !Array.isArray(children) || children.length // Preact defaults to empty children array
-            ? matches
-              ? React.Children.only(children)
+          : // Preact defaults to empty children array
+            !Array.isArray(children) || children.length
+            ? isAnyMatches
+              ? // We have to check whether child is a composite component or not to decide should we
+                // provide `matches` as a prop or not
+                React.Children.only(children) &&
+                typeof React.Children.only(children).type === "string"
+                ? React.Children.only(children)
+                : React.cloneElement(React.Children.only(children), { matches })
               : null
             : null
         : null;
