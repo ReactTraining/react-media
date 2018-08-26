@@ -60,7 +60,7 @@ class App extends React.Component {
 }
 ```
 
-If you render a `<Media>` component on the server, it always matches.
+If you render a `<Media>` component on the server, it will match by default. You can override the default behavior by setting the `defaultMatches` prop, see [below](#defaultmatches-prop-for-server-side-rendering) for details.
 
 If you use a regular React element as `children` (i.e. `<Media><SomethingHere/></Media>`) it will be rendered if the query matches. However, _you may end up creating a bunch of elements that won't ever actually be rendered to the page_ (i.e. you'll do a lot of unnecessary `createElement`s on each `render`). Thus, a `children` **function** (i.e. `<Media>{matches => ...}</Media>`) is the preferred API. Then you can decide in the callback which elements to create based on the result of the query.
 
