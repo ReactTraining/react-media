@@ -164,7 +164,7 @@ describe("A <Media>", () => {
     });
   });
 
-  describe("when an onQueryStateChange function is passed", () => {
+  describe("when an onChange function is passed", () => {
     const mockAddListener = jest.fn();
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(true, mockAddListener);
@@ -177,7 +177,7 @@ describe("A <Media>", () => {
     it("adds the function as a listener to the media query", () => {
       const callback = () => {};
       const element = (
-        <Media query="" onQueryStateChange={callback}>
+        <Media query="" onChange={callback}>
           {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
         </Media>
       );
