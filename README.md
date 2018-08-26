@@ -119,6 +119,28 @@ If you're curious about how react-media differs from [react-responsive](https://
 
 Enjoy!
 
+### `defaultMatches` prop for server-side rendering
+
+This component comes with a `defaultMatches` prop and its default is set to true.
+
+When rendering on the server you can use the `defaultMatches` prop to set the initial state on the server to match whatever you think it will be on the client. You can detect the user's device by analyzing the user-agent string from the HTTP request in your server-side rendering code.
+
+```
+initialState = {
+  device: 'mobile' // add your own guessing logic here
+};
+
+<div>
+  <Media query=“(max-width: 500px)" defaultMatches={state.device === 'mobile'} render={() => (
+    <Text>Render me below medium breakpoint.</Text>
+  )}/>
+
+  <Media query=“(min-width: 501px)" defaultMatches={state.device === 'desktop'} render={() => (
+    <Text>Render me above medium breakpoint.</Text>
+  )}/>
+</div>
+```
+
 ## About
 
 `react-media` is developed and maintained by [React Training](https://reacttraining.com). If you're interested in learning more about what React can do for your company, please [get in touch](mailto:hello@reacttraining.com)!
