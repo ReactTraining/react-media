@@ -115,6 +115,30 @@ Keys of media query objects are camel-cased and numeric values automatically get
 
 An optional `targetWindow` prop can be specified if you want the `query` to be evaluated against a different window object than the one the code is running in. This can be useful for example if you are rendering part of your component tree to an iframe or [a popup window](https://hackernoon.com/using-a-react-16-portal-to-do-something-cool-2a2d627b0202).
 
+There is also an optional `onChange` prop, which is a callback function that will be invoked when the status of the media query changes. This can be useful if you need to do some imperative stuff in addition to the declarative approach `react-media` already provides.
+
+```jsx
+import React from "react";
+import Media from "react-media";
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Media
+          query="(max-width: 599px)"
+          onChange={matches =>
+            matches
+              ? alert("The document is less than 600px wide.")
+              : alert("The document is at least 600px wide.")
+          }
+        />
+      </div>
+    );
+  }
+}
+```
+
 If you're curious about how react-media differs from [react-responsive](https://github.com/contra/react-responsive), please see [this comment](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260).
 
 Enjoy!
