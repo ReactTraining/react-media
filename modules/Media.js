@@ -28,7 +28,16 @@ class Media extends React.Component {
     matches: this.props.defaultMatches
   };
 
-  updateMatches = () => this.setState({ matches: this.mediaQueryList.matches });
+  updateMatches = () => {
+    const { matches } = this.mediaQueryList;
+
+    this.setState({ matches });
+
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(matches);
+    }
+  };
 
   componentWillMount() {
     if (typeof window !== "object") return;
@@ -44,23 +53,12 @@ class Media extends React.Component {
     if (typeof query !== "string") query = json2mq(query);
 
     this.mediaQueryList = targetWindow.matchMedia(query);
-
-    const { onChange } = this.props;
-    if (onChange) {
-      this.mediaQueryList.addListener(onChange);
-    }
-
     this.mediaQueryList.addListener(this.updateMatches);
     this.updateMatches();
   }
 
   componentWillUnmount() {
     this.mediaQueryList.removeListener(this.updateMatches);
-
-    const { onChange } = this.props;
-    if (onChange) {
-      this.mediaQueryList.removeListener(onChange);
-    }
   }
 
   render() {

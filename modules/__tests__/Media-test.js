@@ -3,14 +3,10 @@ import ReactDOM from "react-dom";
 import ReactDOMServer from "react-dom/server";
 import Media from "../Media";
 
-const createMockMediaMatcher = (
+const createMockMediaMatcher = matches => () => ({
   matches,
-  addListener = () => {},
-  removeListener = () => {}
-) => () => ({
-  matches,
-  addListener,
-  removeListener
+  addListener: () => {},
+  removeListener: () => {}
 });
 
 describe("A <Media>", () => {
@@ -165,25 +161,16 @@ describe("A <Media>", () => {
   });
 
   describe("when an onChange function is passed", () => {
-    const mockAddListener = jest.fn();
     beforeEach(() => {
-      window.matchMedia = createMockMediaMatcher(true, mockAddListener);
+      window.matchMedia = createMockMediaMatcher(true);
     });
 
-    afterEach(() => {
-      mockAddListener.mockClear();
-    });
-
-    it("adds the function as a listener to the media query", () => {
-      const callback = () => {};
-      const element = (
-        <Media query="" onChange={callback}>
-          {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
-        </Media>
-      );
+    it("calls the function with the match result", () => {
+      const callback = jest.fn();
+      const element = <Media query="" onChange={callback} />;
 
       ReactDOM.render(element, node, () => {
-        expect(mockAddListener).toHaveBeenCalledWith(callback);
+        expect(callback).toHaveBeenCalledWith(true);
       });
     });
   });
