@@ -1,14 +1,17 @@
-import { ReactNode, Component } from 'react';
-
+import React from "react";
 export interface MediaQueryObject {
-  [id: string]: boolean | number | string;
+    [id: string]: boolean | number | string;
 }
-
 export interface MediaProps {
-  query: string | MediaQueryObject | MediaQueryObject[];
-  defaultMatches?: boolean;
-  children?: ((matches: boolean) => ReactNode) | ReactNode;
-  render?: () => ReactNode;
+    query: string | MediaQueryObject | MediaQueryObject[];
+    defaultMatches?: boolean;
+    children?: ((matches: boolean) => React.ReactNode) | React.ReactNode;
+    render?: () => React.ReactNode;
+    targetWindow?: Window;
+    onChange?: (matches: boolean) => void;
 }
-
-export default class Media extends Component<MediaProps, any> {}
+/**
+ * Conditionally renders based on whether or not a media query matches.
+ */
+declare class Media extends React.Component<MediaProps> {}
+export default Media;
