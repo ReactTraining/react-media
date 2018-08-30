@@ -16,7 +16,8 @@ class Media extends React.Component {
     ]).isRequired,
     render: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    targetWindow: PropTypes.object
+    targetWindow: PropTypes.object,
+    onChange: PropTypes.func
   };
 
   static defaultProps = {
@@ -27,7 +28,16 @@ class Media extends React.Component {
     matches: this.props.defaultMatches
   };
 
-  updateMatches = () => this.setState({ matches: this.mediaQueryList.matches });
+  updateMatches = () => {
+    const { matches } = this.mediaQueryList;
+
+    this.setState({ matches });
+
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(matches);
+    }
+  };
 
   componentWillMount() {
     if (typeof window !== "object") return;
@@ -56,12 +66,16 @@ class Media extends React.Component {
     const { matches } = this.state;
 
     return render
-      ? matches ? render() : null
+      ? matches
+        ? render()
+        : null
       : children
         ? typeof children === "function"
           ? children(matches)
           : !Array.isArray(children) || children.length // Preact defaults to empty children array
-            ? matches ? React.Children.only(children) : null
+            ? matches
+              ? React.Children.only(children)
+              : null
             : null
         : null;
   }

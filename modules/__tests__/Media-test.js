@@ -160,6 +160,21 @@ describe("A <Media>", () => {
     });
   });
 
+  describe("when an onChange function is passed", () => {
+    beforeEach(() => {
+      window.matchMedia = createMockMediaMatcher(true);
+    });
+
+    it("calls the function with the match result", () => {
+      const callback = jest.fn();
+      const element = <Media query="" onChange={callback} />;
+
+      ReactDOM.render(element, node, () => {
+        expect(callback).toHaveBeenCalledWith(true);
+      });
+    });
+  });
+
   describe("rendered on the server", () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(true);
