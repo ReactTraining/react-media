@@ -1,7 +1,7 @@
 ## [v1.9.0]
 > INSERT DATE
 
-- Add Typescript definitions [#76](https://github.com/ReactTraining/react-media/pull/76)(https://github.com/ReactTraining/react-media/pull/78)
+- Add Typescript definitions [#76](https://github.com/ReactTraining/react-media/pull/76)
 - Add `onChange` callback [#95](https://github.com/ReactTraining/react-media/pull/95)
 
 [v1.9.0]: https://github.com/ReactTraining/react-media/compare/v1.7.0...v1.9.0
@@ -9,7 +9,7 @@
 ## [v1.7.0]
 > Feb 1, 2018
 
-- Add optional `targetWindow` prop [#78]
+- Add optional `targetWindow` prop [#78](https://github.com/ReactTraining/react-media/pull/78)
 
 [v1.7.0]: https://github.com/ReactTraining/react-media/compare/v1.6.0...v1.7.0
 
