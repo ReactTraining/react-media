@@ -14,6 +14,7 @@
   "main": "cjs/react-media.js",
   "module": "esm/react-media.js",
   "unpkg": "umd/react-media.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "node ./scripts/build.js",
     "prepublishOnly": "node ./scripts/build.js",
