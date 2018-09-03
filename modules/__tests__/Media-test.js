@@ -284,10 +284,10 @@ describe("A <Media> in browser environment", () => {
 
     it("calls the function with the match result", () => {
       const callback = jest.fn();
-      const element = <Media query="" onChange={callback} />;
+      const element = <Media queries={{ matches: "" }} onChange={callback} />;
 
       ReactDOM.render(element, node, () => {
-        expect(callback).toHaveBeenCalledWith(true);
+        expect(callback).toHaveBeenCalledWith({ matches: true });
       });
     });
   });
