@@ -291,4 +291,20 @@ describe("A <Media> in browser environment", () => {
       });
     });
   });
+
+  describe("when defaultMatches have been passed", () => {
+    beforeEach(() => {
+      window.matchMedia = createMockMediaMatcher(false);
+    });
+
+    it("initially overwrites defaultMatches with matches from matchMedia", async () => {
+      const element = <Media queries={{ matches: "" }} defaultMatches={{ matches: true }}>
+        {({ matches }) => matches ? <div>fully matched</div> : <div>not matched</div>}
+      </Media>;
+
+      ReactDOM.render(element, node, () => {
+        expect(node.firstChild.innerHTML).toMatch('not matched');
+      });
+    });
+  })
 });
