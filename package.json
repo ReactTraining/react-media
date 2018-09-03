@@ -31,6 +31,7 @@
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
+    "@types/react": "*",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.0.0",
     "babel-plugin-dev-expression": "^0.2.1",
