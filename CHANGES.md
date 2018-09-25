@@ -3,6 +3,7 @@
 
 - Add Typescript definitions [#76](https://github.com/ReactTraining/react-media/pull/76)
 - Add `onChange` callback [#95](https://github.com/ReactTraining/react-media/pull/95)
+- Add workaround for Safari not clearing up event handlers properly [#101](https://github.com/ReactTraining/react-media/pull/101)
 
 [v1.9.0]: https://github.com/ReactTraining/react-media/compare/v1.7.0...v1.9.0
 
