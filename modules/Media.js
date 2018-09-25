@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import invariant from "invariant";
 import json2mq from "json2mq";
 
+import MediaQueryList from "./MediaQueryList";
+
 /**
  * Conditionally renders based on whether or not a media query matches.
  */
@@ -52,13 +54,16 @@ class Media extends React.Component {
     let { query } = this.props;
     if (typeof query !== "string") query = json2mq(query);
 
-    this.mediaQueryList = targetWindow.matchMedia(query);
-    this.mediaQueryList.addListener(this.updateMatches);
+    this.mediaQueryList = new MediaQueryList(
+      targetWindow,
+      query,
+      this.updateMatches
+    );
     this.updateMatches();
   }
 
   componentWillUnmount() {
-    this.mediaQueryList.removeListener(this.updateMatches);
+    this.mediaQueryList.cancel();
   }
 
   render() {
