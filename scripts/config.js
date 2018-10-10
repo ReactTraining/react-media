@@ -19,8 +19,8 @@ function getPlugins(env) {
     babel({
       exclude: "node_modules/**",
       babelrc: false,
-      presets: [["env", { loose: true, modules: false }], "stage-1", "react"],
-      plugins: ["external-helpers"].concat(
+      presets: [["@babel/preset-env", { loose: true, modules: false }], "@babel/preset-react"],
+      plugins: ["@babel/plugin-proposal-export-default-from", "@babel/plugin-proposal-class-properties"].concat(
         env === "production"
           ? ["dev-expression", "transform-react-remove-prop-types"]
           : []
@@ -32,7 +32,7 @@ function getPlugins(env) {
   );
 
   if (env === "production") {
-    plugins.push(uglify());
+    plugins.push(uglify);
   }
 
   return plugins;
