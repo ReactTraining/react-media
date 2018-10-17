@@ -1,5 +1,5 @@
 ## [v1.8.0]
-> INSERT DATE
+> Feb 8, 2018
 
 - Add Typescript definitions [#76](https://github.com/ReactTraining/react-media/pull/76)
 - Add `onChange` callback [#95](https://github.com/ReactTraining/react-media/pull/95)
