@@ -1,8 +1,8 @@
-const babel = require("rollup-plugin-babel");
-const commonjs = require("rollup-plugin-commonjs");
-const replace = require("rollup-plugin-replace");
-const resolve = require("rollup-plugin-node-resolve");
-const uglify = require("rollup-plugin-uglify");
+import babel from "rollup-plugin-babel";
+import commonjs from "rollup-plugin-commonjs";
+import replace from "rollup-plugin-replace";
+import resolve from "rollup-plugin-node-resolve";
+import { uglify } from 'rollup-plugin-uglify';
 
 function getPlugins(env) {
   const plugins = [resolve()];
@@ -32,7 +32,7 @@ function getPlugins(env) {
   );
 
   if (env === "production") {
-    plugins.push(uglify);
+    plugins.push(uglify());
   }
 
   return plugins;
