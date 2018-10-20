@@ -155,11 +155,11 @@ initialState = {
 };
 
 <div>
-  <Media query=“(max-width: 500px)" defaultMatches={state.device === 'mobile'} render={() => (
+  <Media query="(max-width: 500px)" defaultMatches={state.device === 'mobile'} render={() => (
     <Text>Render me below medium breakpoint.</Text>
   )}/>
 
-  <Media query=“(min-width: 501px)" defaultMatches={state.device === 'desktop'} render={() => (
+  <Media query="(min-width: 501px)" defaultMatches={state.device === 'desktop'} render={() => (
     <Text>Render me above medium breakpoint.</Text>
   )}/>
 </div>
