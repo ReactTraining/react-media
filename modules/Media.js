@@ -9,6 +9,39 @@ import MediaQueryList from "./MediaQueryList";
  * Conditionally renders based on whether or not a media query matches.
  */
 class Media extends React.Component {
+  constructor(props) {
+    super(props);
+
+    if (typeof window !== "object") return;
+
+    const targetWindow = props.targetWindow || window;
+
+    invariant(
+      typeof targetWindow.matchMedia === "function",
+      "<Media targetWindow> does not support `matchMedia`."
+    );
+
+    let { query } = props;
+    if (typeof query !== "string") query = json2mq(query);
+
+    this.mediaQueryList = new MediaQueryList(
+      targetWindow,
+      query,
+      this.updateMatches
+    );
+
+    const { matches } = this.mediaQueryList;
+
+    this.state = {
+      matches: matches && props.defaultMatches
+    };
+
+    const { onChange } = props;
+    if (onChange) {
+      onChange(matches);
+    }
+  }
+
   static propTypes = {
     defaultMatches: PropTypes.bool,
     query: PropTypes.oneOfType([
@@ -26,10 +59,6 @@ class Media extends React.Component {
     defaultMatches: true
   };
 
-  state = {
-    matches: this.props.defaultMatches
-  };
-
   updateMatches = () => {
     const { matches } = this.mediaQueryList;
 
@@ -40,27 +69,6 @@ class Media extends React.Component {
       onChange(matches);
     }
   };
-
-  componentWillMount() {
-    if (typeof window !== "object") return;
-
-    const targetWindow = this.props.targetWindow || window;
-
-    invariant(
-      typeof targetWindow.matchMedia === "function",
-      "<Media targetWindow> does not support `matchMedia`."
-    );
-
-    let { query } = this.props;
-    if (typeof query !== "string") query = json2mq(query);
-
-    this.mediaQueryList = new MediaQueryList(
-      targetWindow,
-      query,
-      this.updateMatches
-    );
-    this.updateMatches();
-  }
 
   componentWillUnmount() {
     this.mediaQueryList.cancel();
