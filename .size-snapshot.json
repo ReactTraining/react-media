@@ -1,0 +1,26 @@
+{
+  "esm/react-media.js": {
+    "bundled": 3842,
+    "minified": 2326,
+    "gzipped": 872,
+    "treeshaked": {
+      "rollup": {
+        "code": 1922,
+        "import_statements": 272
+      },
+      "webpack": {
+        "code": 3182
+      }
+    }
+  },
+  "umd/react-media.js": {
+    "bundled": 34808,
+    "minified": 10983,
+    "gzipped": 3940
+  },
+  "umd/react-media.min.js": {
+    "bundled": 11515,
+    "minified": 4288,
+    "gzipped": 1928
+  }
+}
