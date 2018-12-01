@@ -9,19 +9,6 @@ import MediaQueryList from './MediaQueryList';
  * Conditionally renders based on whether or not a media query matches.
  */
 class Media extends React.Component {
-  static propTypes = {
-    defaultMatches: PropTypes.bool,
-    query: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object.isRequired)
-    ]).isRequired,
-    render: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    targetWindow: PropTypes.object,
-    onChange: PropTypes.func
-  };
-
   static defaultProps = {
     defaultMatches: true
   };
@@ -84,6 +71,21 @@ class Media extends React.Component {
             : null
         : null;
   }
+}
+
+if (__DEV__) {
+  Media.propTypes = {
+    defaultMatches: PropTypes.bool,
+    query: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object.isRequired)
+    ]).isRequired,
+    render: PropTypes.func,
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    targetWindow: PropTypes.object,
+    onChange: PropTypes.func
+  };
 }
 
 export default Media;

@@ -8,5 +8,13 @@
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:react/recommended"
-  ]
+  ],
+  "globals": {
+    "__DEV__": true
+  },
+  "settings": {
+    "react": {
+      "version": "15"
+    }
+  }
 }
