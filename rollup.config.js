@@ -1,42 +1,42 @@
-import babel from 'rollup-plugin-babel';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
-import { uglify } from 'rollup-plugin-uglify';
+import babel from "rollup-plugin-babel";
+import replace from "rollup-plugin-replace";
+import commonjs from "rollup-plugin-commonjs";
+import nodeResolve from "rollup-plugin-node-resolve";
+import { sizeSnapshot } from "rollup-plugin-size-snapshot";
+import { uglify } from "rollup-plugin-uglify";
 
-import pkg from './package.json';
+import pkg from "./package.json";
 
-const input = 'modules/index.js';
-const globalName = 'ReactMedia';
+const input = "modules/index.js";
+const globalName = "ReactMedia";
 
 function external(id) {
-  return !id.startsWith('.') && !id.startsWith('/');
+  return !id.startsWith(".") && !id.startsWith("/");
 }
 
 const cjs = [
   {
     input,
-    output: { file: `cjs/${pkg.name}.js`, format: 'cjs' },
+    output: { file: `cjs/${pkg.name}.js`, format: "cjs" },
     external,
     plugins: [
       babel({
         exclude: /node_modules/
       }),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('development') })
+      replace({ "process.env.NODE_ENV": JSON.stringify("development") })
     ]
   },
 
   {
     input,
-    output: { file: `cjs/${pkg.name}.min.js`, format: 'cjs' },
+    output: { file: `cjs/${pkg.name}.min.js`, format: "cjs" },
     external,
     plugins: [
       babel({
         exclude: /node_modules/,
-        plugins: [['transform-react-remove-prop-types', { removeImport: true }]]
+        plugins: [["transform-react-remove-prop-types", { removeImport: true }]]
       }),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+      replace({ "process.env.NODE_ENV": JSON.stringify("production") }),
       uglify()
     ]
   }
@@ -45,42 +45,39 @@ const cjs = [
 const esm = [
   {
     input,
-    output: { file: `esm/${pkg.name}.js`, format: 'esm' },
+    output: { file: `esm/${pkg.name}.js`, format: "esm" },
     external,
     plugins: [
       babel({
         exclude: /node_modules/,
-        runtimeHelpers: true,
-        plugins: [['@babel/transform-runtime', { useESModules: true }], ['transform-react-remove-prop-types', { removeImport: true }]]
+        plugins: [["transform-react-remove-prop-types", { removeImport: true }]]
       }),
       sizeSnapshot()
     ]
   }
 ];
 
-const globals = { react: 'React' };
+const globals = { react: "React" };
 
 const umd = [
   {
     input,
     output: {
       file: `umd/${pkg.name}.js`,
-      format: 'umd',
+      format: "umd",
       name: globalName,
       globals
     },
     external: Object.keys(globals),
     plugins: [
       babel({
-        exclude: /node_modules/,
-        runtimeHelpers: true,
-        plugins: [['@babel/transform-runtime', { useESModules: true }]]
+        exclude: /node_modules/
       }),
       nodeResolve(),
       commonjs({
         include: /node_modules/
       }),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
+      replace({ "process.env.NODE_ENV": JSON.stringify("development") }),
       sizeSnapshot()
     ]
   },
@@ -89,7 +86,7 @@ const umd = [
     input,
     output: {
       file: `umd/${pkg.name}.min.js`,
-      format: 'umd',
+      format: "umd",
       name: globalName,
       globals
     },
@@ -97,14 +94,13 @@ const umd = [
     plugins: [
       babel({
         exclude: /node_modules/,
-        runtimeHelpers: true,
-        plugins: [['@babel/transform-runtime', { useESModules: true }], ['transform-react-remove-prop-types', { removeImport: true }]]
+        plugins: [["transform-react-remove-prop-types", { removeImport: true }]]
       }),
       nodeResolve(),
       commonjs({
         include: /node_modules/
       }),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+      replace({ "process.env.NODE_ENV": JSON.stringify("production") }),
       sizeSnapshot(),
       uglify()
     ]
@@ -113,13 +109,13 @@ const umd = [
 
 let config;
 switch (process.env.BUILD_ENV) {
-  case 'cjs':
+  case "cjs":
     config = cjs;
     break;
-  case 'esm':
+  case "esm":
     config = esm;
     break;
-  case 'umd':
+  case "umd":
     config = umd;
     break;
   default:
