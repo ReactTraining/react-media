@@ -1,6 +1,6 @@
 {
   "name": "react-media",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "CSS media queries for React",
   "repository": "ReactTraining/react-media",
   "license": "MIT",
