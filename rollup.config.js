@@ -33,8 +33,7 @@ const cjs = [
     external,
     plugins: [
       babel({
-        exclude: /node_modules/,
-        plugins: [['transform-react-remove-prop-types', { removeImport: true }]]
+        exclude: /node_modules/
       }),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       uglify()
@@ -51,7 +50,7 @@ const esm = [
       babel({
         exclude: /node_modules/,
         runtimeHelpers: true,
-        plugins: [['@babel/transform-runtime', { useESModules: true }], ['transform-react-remove-prop-types', { removeImport: true }]]
+        plugins: [['@babel/transform-runtime', { useESModules: true }]]
       }),
       sizeSnapshot()
     ]
@@ -98,7 +97,7 @@ const umd = [
       babel({
         exclude: /node_modules/,
         runtimeHelpers: true,
-        plugins: [['@babel/transform-runtime', { useESModules: true }], ['transform-react-remove-prop-types', { removeImport: true }]]
+        plugins: [['@babel/transform-runtime', { useESModules: true }]]
       }),
       nodeResolve(),
       commonjs({
