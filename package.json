@@ -16,7 +16,7 @@
   "unpkg": "umd/react-media.js",
   "types": "index.d.ts",
   "scripts": {
-    "build": "del cjs esm umd && rollup -c",
+    "build": "rollup -c",
     "prepublishOnly": "npm run build",
     "clean": "git clean -fdX .",
     "lint": "eslint modules",
@@ -43,7 +43,6 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-plugin-dev-expression": "^0.2.1",
-    "del-cli": "^1.1.0",
     "eslint": "^5.9.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^22.1.0",
