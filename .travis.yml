@@ -2,18 +2,23 @@ language: node_js
 node_js: node
 cache: npm
 env:
-  global:
-  - secure: J/xT+f4cyBtvmi1rNbwNOQcP/dnheS6Ydi0pHlf7PaEPYVauHWVOYt/aANwdkW4mZP/dlTpvG+J56DkDypvj6U7Q8xL+66PCWpP7geFkwz0kAzD0Els+zSdzpjSoAf4b7d+k8m+3hcjO+BePsDashnx4kLXtRAMbfPMsEaKyAyhMhod/dpBV69vXOTIeJMjPDoScl9LMDOoYGmwAYGRwqRmnH8twGfCknvqfns937r8bHXp6CwMVNhFi82nbGFcO5YDwQNjsp0yg0tzK1xXcIRwG86IABAIBlxvahmi6lsLeGnn21VwoAbYuc6zMj4jlhwjnj0Ko4faV1cQrUVAg5H2C6EdLHij/ufdcG9dwdNGpj9oEiUY97lZrBrmj9RDqGSN/ajA+CZqfjM0ohWXXytieMaCM6ldNF2alYRFaEcoGmHAOUW0Vw5NtUtpvA+cWwwGbxwWhEM+ZBL1/McdWJbH9M6FRj0M6LEB2AzjbtVpU7e74uRcgiwa5BeZYrZ+De9PpTK5XIS5yUTO6xxQ1hH1R6mtslfZTG9hQW/f4gmC/jUEn2OHJ+ZUTXU436zM8g7Q/Iz3DSADhvMFZ3G7ppCOF9csqYMm70lcH3vvMw4uWh/cyVCW70PFou7OMZju11rXxA2C+rzAmmiTqqjEoyDI1dSKi2fImIX2wMZaTOJY=
-  - NPM_TAG=$([[ "$TRAVIS_TAG" == *-* ]] && echo "next" || echo "latest")
+- TEST_ENV=cjs
+- TEST_ENV=source
 script:
 - npm run lint
 - npm test
-deploy:
-  provider: npm
-  email: npm@mjackson.me
-  api_key: "$NPM_TOKEN"
-  tag: "$NPM_TAG"
-  skip_cleanup: true
-  on:
-    all_branches: true
-    condition: '"$TRAVIS_TAG" =~ ^v[0-9]'
+jobs:
+  include:
+  - stage: Release
+    if: tag =~ ^v[0-9]
+    env: NPM_TAG=$([[ "$TRAVIS_TAG" == *-* ]] && echo "next" || echo "latest")
+    script: echo "Releasing $TRAVIS_TAG to npm with tag \"$NPM_TAG\" ..."
+    deploy:
+      provider: npm
+      skip_cleanup: true
+      tag: "$NPM_TAG"
+      email: npm@mjackson.me
+      api_key:
+        secure: Vh46fcq28yrIrhg4I72kPX1B+iZ6/b+2kZVtgYOvZLIpEGB0rsWgfIUqKAfmLX3oh9R72Vfu70mwdEZ4nkql2Qr+c5PaFXHUfTlSeuCiVaEriw2NK4iDRZ8fhMa0VpMd5Jm86Y3RyLUGr4AfAmikGzeijhH70ooZ+EGql39AwdIIktw7OtqopB3WxkMuV6UVmlG68067p65H/V4cf+Kzhy4XlxsGkKgxQ3jm1NgtEG5x9SrpYnOkfwcHo+GaoEvSXXY88WHkFA/YEj0fkeLbodeT2NFKx9cboo2rMB0n55khbfqgTnsUtSPRj1LJQDGMU7fuycC+/Xmb1sZmsKh39bDKgW1Qyw254j3ICMOp+5LGRlQRwzGFLlKup8fEnNevv1jo0znT0TtuNfdw9OENrCZeIHtZmf4dm+uSbpGIfG6T9UfoBhG6ya3O08J5eJCBVUoeHZZaxZ+ufRko2ucfFUx7m755TIsmP74RwF5FOBDTnZY6Hip11rpD32vNPfwAOQe0ra04QpYp5P4jSDUG9/194BKIUnOgFDq5C1JOXsNgOxQuQMiYD7jNkUWNPr1UidScaPhYTwvH+Yi7GkKb/oo49uuhuvOwojAMRpHrsfOKV3eb/vYRxR7tiyVRyYzw4JAkmBtNQEZ9ipqsM31YPIIek/bwKvLkn94+499P/Ks=
+      on:
+        tags: true
