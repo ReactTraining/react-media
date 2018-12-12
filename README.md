@@ -19,16 +19,16 @@ Then, use as you would anything else:
 
 ```js
 // using ES modules
-import Media from "react-media";
+import Media from 'react-media';
 
 // using CommonJS modules
-var Media = require("react-media");
+var Media = require('react-media');
 ```
 
 The UMD build is also available on [unpkg](https://unpkg.com):
 
 ```html
-<script src="https://unpkg.com/react-media/umd/react-media.min.js"></script>
+<script src="https://unpkg.com/react-media"></script>
 ```
 
 You can find the library on `window.ReactMedia`.
@@ -38,8 +38,8 @@ You can find the library on `window.ReactMedia`.
 Render a `<Media>` component with a `query` prop whose value is a valid [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries). The `children` prop should be a function whose only argument will be a boolean flag that indicates whether the media query matches or not.
 
 ```jsx
-import React from "react";
-import Media from "react-media";
+import React from 'react';
+import Media from 'react-media';
 
 class App extends React.Component {
   render() {
@@ -67,8 +67,8 @@ If you use a regular React element as `children` (i.e. `<Media><SomethingHere/><
 For the common case of "only render something when the media query matches", you can use a `render` prop that is only called if the query matches.
 
 ```jsx
-import React from "react";
-import Media from "react-media";
+import React from 'react';
+import Media from 'react-media';
 
 class App extends React.Component {
   render() {
@@ -89,8 +89,8 @@ The `render` prop is never called if the query does not match.
 `<Media query>` also accepts an object, similar to [React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html) in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
 
 ```jsx
-import React from "react";
-import Media from "react-media";
+import React from 'react';
+import Media from 'react-media';
 
 class App extends React.Component {
   render() {
@@ -118,8 +118,8 @@ An optional `targetWindow` prop can be specified if you want the `query` to be e
 There is also an optional `onChange` prop, which is a callback function that will be invoked when the status of the media query changes. This can be useful if you need to do some imperative stuff in addition to the declarative approach `react-media` already provides.
 
 ```jsx
-import React from "react";
-import Media from "react-media";
+import React from 'react';
+import Media from 'react-media';
 
 class App extends React.Component {
   render() {
@@ -129,8 +129,8 @@ class App extends React.Component {
           query="(max-width: 599px)"
           onChange={matches =>
             matches
-              ? alert("The document is less than 600px wide.")
-              : alert("The document is at least 600px wide.")
+              ? alert('The document is less than 600px wide.')
+              : alert('The document is at least 600px wide.')
           }
         />
       </div>
@@ -155,14 +155,18 @@ initialState = {
 };
 
 <div>
-  <Media query="(max-width: 500px)" defaultMatches={state.device === 'mobile'} render={() => (
-    <Text>Render me below medium breakpoint.</Text>
-  )}/>
+  <Media
+    query="(max-width: 500px)"
+    defaultMatches={state.device === 'mobile'}
+    render={() => <Text>Render me below medium breakpoint.</Text>}
+  />
 
-  <Media query="(min-width: 501px)" defaultMatches={state.device === 'desktop'} render={() => (
-    <Text>Render me above medium breakpoint.</Text>
-  )}/>
-</div>
+  <Media
+    query="(min-width: 501px)"
+    defaultMatches={state.device === 'desktop'}
+    render={() => <Text>Render me above medium breakpoint.</Text>}
+  />
+</div>;
 ```
 
 ## About
