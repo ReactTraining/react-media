@@ -9,6 +9,7 @@ import pkg from './package.json';
 
 const input = 'modules/index.js';
 const globalName = 'ReactMedia';
+const globals = { react: 'React' };
 
 function external(id) {
   return !id.startsWith('.') && !id.startsWith('/');
@@ -20,9 +21,7 @@ const cjs = [
     output: { file: `cjs/${pkg.name}.js`, format: 'cjs' },
     external,
     plugins: [
-      babel({
-        exclude: /node_modules/
-      }),
+      babel({ exclude: /node_modules/ }),
       replace({ 'process.env.NODE_ENV': JSON.stringify('development') })
     ]
   },
@@ -32,9 +31,7 @@ const cjs = [
     output: { file: `cjs/${pkg.name}.min.js`, format: 'cjs' },
     external,
     plugins: [
-      babel({
-        exclude: /node_modules/
-      }),
+      babel({ exclude: /node_modules/ }),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       uglify()
     ]
@@ -56,8 +53,6 @@ const esm = [
     ]
   }
 ];
-
-const globals = { react: 'React' };
 
 const umd = [
   {

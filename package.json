@@ -26,6 +26,7 @@
     "react": ">=15 || ^0.14.7"
   },
   "dependencies": {
+    "@babel/runtime": "^7.2.0",
     "invariant": "^2.2.2",
     "json2mq": "^0.2.0",
     "prop-types": "^15.5.10"
@@ -37,7 +38,6 @@
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
-    "@babel/runtime": "^7.1.5",
     "@types/react": "*",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
