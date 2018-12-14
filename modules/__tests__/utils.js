@@ -10,8 +10,9 @@ if (React.StrictMode) {
   StrictMode = React.StrictMode;
 }
 
-export function renderStrict(element, node) {
+export function renderStrict(element, node, callback) {
   ReactDOM.render(<StrictMode>{element}</StrictMode>, node);
+  callback();
 }
 
 export function serverRenderStrict(element) {
