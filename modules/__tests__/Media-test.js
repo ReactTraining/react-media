@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactDOMServer from 'react-dom/server';
 
 import Media from '../Media';
+import { renderStrict, serverRenderStrict } from './utils';
 
 function createMockMediaMatcher(matches) {
   return () => ({
@@ -40,7 +39,7 @@ describe('A <Media>', () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
+        renderStrict(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/);
         });
       });
@@ -54,7 +53,7 @@ describe('A <Media>', () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
+        renderStrict(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/);
         });
       });
@@ -64,7 +63,7 @@ describe('A <Media>', () => {
       it('renders its child', () => {
         const element = <Media query="" render={() => <div>hello</div>} />;
 
-        ReactDOM.render(element, node, () => {
+        renderStrict(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/hello/);
         });
       });
@@ -84,7 +83,7 @@ describe('A <Media>', () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
+        renderStrict(element, node, () => {
           expect(node.firstChild.innerHTML || '').not.toMatch(/hello/);
         });
       });
@@ -98,7 +97,7 @@ describe('A <Media>', () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
+        renderStrict(element, node, () => {
           expect(node.firstChild.innerHTML).toMatch(/goodbye/);
         });
       });
@@ -117,7 +116,7 @@ describe('A <Media>', () => {
           />
         );
 
-        ReactDOM.render(element, node, () => {
+        renderStrict(element, node, () => {
           expect(node.firstChild.innerHTML || '').not.toMatch(/hello/);
           expect(renderWasCalled).toBe(false);
         });
@@ -141,7 +140,7 @@ describe('A <Media>', () => {
         </Media>
       );
 
-      ReactDOM.render(element, node, () => {
+      renderStrict(element, node, () => {
         expect(node.firstChild.innerHTML).toMatch(/goodbye/);
       });
     });
@@ -157,7 +156,7 @@ describe('A <Media>', () => {
         );
 
         expect(() => {
-          ReactDOM.render(element, node, () => {});
+          renderStrict(element, node, () => {});
         }).toThrow('does not support `matchMedia`');
       });
     });
@@ -172,7 +171,7 @@ describe('A <Media>', () => {
       const callback = jest.fn();
       const element = <Media query="" onChange={callback} />;
 
-      ReactDOM.render(element, node, () => {
+      renderStrict(element, node, () => {
         expect(callback).toHaveBeenCalledWith(true);
       });
     });
@@ -184,7 +183,7 @@ describe('A <Media>', () => {
     });
 
     it('renders its child', () => {
-      const markup = ReactDOMServer.renderToStaticMarkup(
+      const markup = serverRenderStrict(
         <Media query="">
           <div>hello</div>
         </Media>
