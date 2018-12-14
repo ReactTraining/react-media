@@ -76,7 +76,7 @@ describe('A <Media>', () => {
     });
 
     describe('and a children element', () => {
-      it('renders its child', () => {
+      it('does not render its child', () => {
         const element = (
           <Media query="">
             <div>hello</div>
@@ -90,7 +90,7 @@ describe('A <Media>', () => {
     });
 
     describe('and a children function', () => {
-      it('renders its child', () => {
+      it('renders according to a non match', () => {
         const element = (
           <Media query="">
             {matches => (matches ? <div>hello</div> : <div>goodbye</div>)}
