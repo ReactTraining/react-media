@@ -84,7 +84,7 @@ describe('A <Media>', () => {
         );
 
         renderStrict(element, node, () => {
-          expect(node.firstChild.innerHTML || '').not.toMatch(/hello/);
+          expect(node.innerHTML || '').not.toMatch(/hello/);
         });
       });
     });
@@ -103,7 +103,7 @@ describe('A <Media>', () => {
       });
     });
 
-    describe('and a render function', () => {
+    describe.only('and a render function', () => {
       it('does not render', () => {
         let renderWasCalled = false;
         const element = (
@@ -117,7 +117,7 @@ describe('A <Media>', () => {
         );
 
         renderStrict(element, node, () => {
-          expect(node.firstChild.innerHTML || '').not.toMatch(/hello/);
+          expect(node.innerHTML || '').not.toMatch(/hello/);
           expect(renderWasCalled).toBe(false);
         });
       });
