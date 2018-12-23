@@ -24,31 +24,51 @@ class Media extends React.Component {
 
   queries = [];
 
-  state = {
-    matches:
-      this.props.defaultMatches ||
-      Object.keys(this.props.queries).reduce(
-        (acc, key) => ({ ...acc, [key]: true }),
-        {}
-      )
-  };
+  constructor(props) {
+    super(props);
 
-  updateMatches = () => {
-    const newMatches = this.queries.reduce(
+    if (typeof window !== "object") {
+      // In case we're rendering on the server
+      this.state = {
+        matches:
+          this.props.defaultMatches ||
+          Object.keys(this.props.queries).reduce(
+            (acc, key) => ({ ...acc, [key]: true }),
+            {}
+          )
+      };
+      return;
+    }
+
+    this.initialize();
+
+    // Instead of calling this.updateMatches, we manually set the state to prevent
+    // calling setState, which could trigger an unnecessary second render
+    this.state = {
+      matches:
+        this.props.defaultMatches !== undefined
+          ? this.props.defaultMatches
+          : this.getMatches()
+    };
+    this.onChange();
+  }
+
+  getMatches = () => {
+    return this.queries.reduce(
       (acc, { name, mqList }) => ({ ...acc, [name]: mqList.matches }),
       {}
     );
-    this.setState({ matches: newMatches });
-
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange(newMatches);
-    }
   };
 
-  componentWillMount() {
-    if (typeof window !== "object") return;
+  updateMatches = () => {
+    const newMatches = this.getMatches();
 
+    this.setState(() => ({
+      matches: newMatches
+    }), this.onChange);
+  };
+
+  initialize() {
     const targetWindow = this.props.targetWindow || window;
 
     invariant(
@@ -67,8 +87,23 @@ class Media extends React.Component {
 
       return { name, qs, mqList };
     });
+  }
 
-    this.updateMatches();
+  componentDidMount() {
+    this.initialize();
+    // If props.defaultMatches has been set, ensure we trigger a two-pass render.
+    // This is useful for SSR with mismatching defaultMatches vs actual matches from window.matchMedia
+    // Details: https://github.com/ReactTraining/react-media/issues/81
+    if (this.props.defaultMatches !== undefined) {
+      this.updateMatches();
+    }
+  }
+
+  onChange() {
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(this.state.matches);
+    }
   }
 
   componentWillUnmount() {
