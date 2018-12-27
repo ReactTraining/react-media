@@ -103,7 +103,7 @@ describe('A <Media>', () => {
       });
     });
 
-    describe.only('and a render function', () => {
+    describe('and a render function', () => {
       it('does not render', () => {
         let renderWasCalled = false;
         const element = (
