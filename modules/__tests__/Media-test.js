@@ -40,7 +40,7 @@ describe('A <Media>', () => {
         );
 
         renderStrict(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch(/hello/);
+          expect(node.innerHTML).toMatch(/hello/);
         });
       });
     });
@@ -54,7 +54,7 @@ describe('A <Media>', () => {
         );
 
         renderStrict(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch(/hello/);
+          expect(node.innerHTML).toMatch(/hello/);
         });
       });
     });
@@ -64,7 +64,7 @@ describe('A <Media>', () => {
         const element = <Media query="" render={() => <div>hello</div>} />;
 
         renderStrict(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch(/hello/);
+          expect(node.innerHTML).toMatch(/hello/);
         });
       });
     });
@@ -98,7 +98,7 @@ describe('A <Media>', () => {
         );
 
         renderStrict(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch(/goodbye/);
+          expect(node.innerHTML).toMatch(/goodbye/);
         });
       });
     });
@@ -141,7 +141,7 @@ describe('A <Media>', () => {
       );
 
       renderStrict(element, node, () => {
-        expect(node.firstChild.innerHTML).toMatch(/goodbye/);
+        expect(node.innerHTML).toMatch(/goodbye/);
       });
     });
 
