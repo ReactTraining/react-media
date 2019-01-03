@@ -75,15 +75,15 @@ There are three props which allow you to render your content. They each serve a 
 
 |prop|description|example|
 |---|---|---|
-|render|Only invoked when the query matches. This is a nice shorthand if you only want to render something for a matching query.|`<Media query="..." render={() => <p>I matched!</p>} />`|
-|children (function)|Receives a single boolean element, indicating whether the media query matched. Use this prop if you need to render something when the query doesn't match.|`<Media query="...">{matches => matches ? <p>I matched!</p> : <p>I didn't match</p>}</Media>`|
-|children (react element)|If you render a regular React element within `<Media>`, it will render that element when the query matches. This method serves the same purpose as the `render` prop, however, you'll create component instances regardless of whether the query matches or not. Hence, using the `render` prop is preferred ([more info](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260)).|`<Media query="..."><p>I matched!</p></Media>`|
+|render|Only invoked when **at least one** of the queries matches. This is a nice shorthand if you only want to render something for a matching query.|`<Media query={{ foo: ... }} render={() => <p>I matched!</p>} />`|
+|children (function)|Receives an object of booleans whose keys are the same as the `queries` prop, indicating whether each media query matched. Use this prop if you need to render different output for each of specified queries.|`<Media queries={{ foo: ... }}>{matches => matches.foo ? <p>I matched!</p> : <p>I didn't match</p>}</Media>`|
+|children (react element)|If you render a regular React element within `<Media>`, it will render that element when **at least one** of the queries matches. This method serves the same purpose as the `render` prop, however, you'll create component instances regardless of whether the queries match or not. Hence, using the `render` prop is preferred ([more info](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260)).|`<Media queries={{ ... }}><p>I matched!</p></Media>`|
 
 
 ## `queries`
 
-In addition to passing a valid media query string, the `query`
-prop will also accept an object, similar to
+In addition to passing a valid media query string, the `queries`
+prop will also accept an object of objects whose forms are similar to
 [React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html)
 in e.g. `<div style>`. These objects are converted to CSS
 media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
@@ -108,7 +108,7 @@ class App extends React.Component {
           }
         </Media>
 
-        <Media query={{ small: "(max-width: 599px)" }}>
+        <Media queries={{ small: "(max-width: 599px)" }}>
           {matches =>
             matches.small ? (
               <p>The document is less than 600px wide.</p>
@@ -168,7 +168,7 @@ Keys of media query objects are camel-cased and numeric values automatically get
 
 ## `onChange`
 
-You can specify an optional `onChange` prop, which is a callback function that will be invoked when the status of the media query changes. This can be useful for triggering side effects, independent of the render lifecycle.
+You can specify an optional `onChange` prop, which is a callback function that will be invoked when the status of the media queries changes. This can be useful for triggering side effects, independent of the render lifecycle.
 
 ```jsx
 import React from 'react';
@@ -179,9 +179,9 @@ class App extends React.Component {
     return (
       <div>
         <Media
-          query="(max-width: 599px)"
+          query={{ small: "(max-width: 599px)" }}
           onChange={matches =>
-            matches
+            matches.small
               ? alert('The document is less than 600px wide.')
               : alert('The document is at least 600px wide.')
           }
@@ -205,14 +205,14 @@ initialState = {
 
 <div>
   <Media
-    query="(max-width: 500px)"
-    defaultMatches={state.device === 'mobile'}
+    queries={{ medium: "(max-width: 500px)" }}
+    defaultMatches={{ medium: state.device === 'mobile' }}
     render={() => <Text>Render me below medium breakpoint.</Text>}
   />
 
   <Media
-    query="(min-width: 501px)"
-    defaultMatches={state.device === 'desktop'}
+    queries={{ medium: "(min-width: 501px)" }}
+    defaultMatches={{ medium: state.device === 'desktop' }}
     render={() => <Text>Render me above medium breakpoint.</Text>}
   />
 </div>;
@@ -220,7 +220,7 @@ initialState = {
 
 ## `targetWindow`
 
-An optional `targetWindow` prop can be specified if you want the `query` to be evaluated against a different window object than the one the code is running in. This can be useful if you are rendering part of your component tree to an iframe or [a popup window](https://hackernoon.com/using-a-react-16-portal-to-do-something-cool-2a2d627b0202). See [this PR thread](https://github.com/ReactTraining/react-media/pull/78) for context.
+An optional `targetWindow` prop can be specified if you want the `queries` to be evaluated against a different window object than the one the code is running in. This can be useful if you are rendering part of your component tree to an iframe or [a popup window](https://hackernoon.com/using-a-react-16-portal-to-do-something-cool-2a2d627b0202). See [this PR thread](https://github.com/ReactTraining/react-media/pull/78) for context.
 
 ## Compared to react-responsive
 
