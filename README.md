@@ -35,24 +35,33 @@ You can find the library on `window.ReactMedia`.
 
 ## Basic usage
 
-Render a `<Media>` component with a `query` prop whose value is a valid [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries). The `children` prop should be a function whose only argument will be a boolean flag that indicates whether the media query matches or not.
+Render a `<Media>` component with a `queries` prop whose value is an object,
+where each value is a valid
+[CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries).
+The `children` prop should be a function whose argument will be an object with the
+same keys as your `queries` object, and whose values are booleans indicating whether
+each query matches.
 
 ```jsx
-import React from 'react';
+import React, { Fragment } from 'react';
 import Media from 'react-media';
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <Media query="(max-width: 599px)">
-          {matches =>
-            matches ? (
-              <p>The document is less than 600px wide.</p>
-            ) : (
-              <p>The document is at least 600px wide.</p>
-            )
-          }
+        <Media queries={{
+          small: "(max-width: 599px)",
+          medium: "(min-width: 600px) and (max-width: 1199px)",
+          large: "(min-width: 1200px)"
+        }}>
+          {matches => (
+            <Fragment>
+              {matches.small && <p>I am small!</p>}
+              {matches.medium && <p>I am medium!</p>}
+              {matches.large && <p>I am large!</p>}
+            </Fragment>
+          )}
         </Media>
       </div>
     );
@@ -69,6 +78,52 @@ There are three props which allow you to render your content. They each serve a 
 |render|Only invoked when the query matches. This is a nice shorthand if you only want to render something for a matching query.|`<Media query="..." render={() => <p>I matched!</p>} />`|
 |children (function)|Receives a single boolean element, indicating whether the media query matched. Use this prop if you need to render something when the query doesn't match.|`<Media query="...">{matches => matches ? <p>I matched!</p> : <p>I didn't match</p>}</Media>`|
 |children (react element)|If you render a regular React element within `<Media>`, it will render that element when the query matches. This method serves the same purpose as the `render` prop, however, you'll create component instances regardless of whether the query matches or not. Hence, using the `render` prop is preferred ([more info](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260)).|`<Media query="..."><p>I matched!</p></Media>`|
+
+
+## `queries`
+
+In addition to passing a valid media query string, the `query`
+prop will also accept an object, similar to
+[React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html)
+in e.g. `<div style>`. These objects are converted to CSS
+media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
+
+```jsx
+import React from 'react';
+import Media from 'react-media';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>These two Media components are equivalent</h1>
+
+        <Media queries={{ small: { maxWidth: 599 } }}>
+          {matches =>
+            matches.small ? (
+              <p>The document is less than 600px wide.</p>
+            ) : (
+              <p>The document is at least 600px wide.</p>
+            )
+          }
+        </Media>
+
+        <Media query={{ small: "(max-width: 599px)" }}>
+          {matches =>
+            matches.small ? (
+              <p>The document is less than 600px wide.</p>
+            ) : (
+              <p>The document is at least 600px wide.</p>
+            )
+          }
+        </Media>
+      </div>
+    );
+  }
+}
+```
+
+Keys of media query objects are camel-cased and numeric values automatically get the `px` suffix. See the [json2mq docs](https://github.com/akiran/json2mq/blob/master/README.md#usage) for more examples of queries you can construct using objects.
 
 ## `query`
 
