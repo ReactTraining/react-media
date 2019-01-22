@@ -1,8 +1,9 @@
 /** @jest-environment node */
 
 import React from "react";
-import ReactDOMServer from "react-dom/server";
 import Media from "../Media";
+
+import { serverRenderStrict } from './utils';
 
 describe("A <Media> in server environment", () => {
   const queries = {
@@ -15,15 +16,15 @@ describe("A <Media> in server environment", () => {
     it("should render its children as if all queries are matching", () => {
       const element = (
         <Media queries={queries}>
-          {matches =>
-            matches.sm &&
-            matches.lg &&
-            matches.xl && <span>All matches, render!</span>
-          }
+          {matches => (
+              (matches.sm && matches.lg && matches.xl)
+              ? <span>All matches, render!</span>
+              : null
+          )}
         </Media>
       );
 
-      const result = ReactDOMServer.renderToStaticMarkup(element);
+      const result = serverRenderStrict(element);
 
       expect(result).toBe("<span>All matches, render!</span>");
     });
@@ -49,7 +50,7 @@ describe("A <Media> in server environment", () => {
         </Media>
       );
 
-      const result = ReactDOMServer.renderToStaticMarkup(element);
+      const result = serverRenderStrict(element);
 
       expect(result).toBe("<div><span>small</span></div>");
     });

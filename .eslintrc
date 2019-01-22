@@ -3,13 +3,18 @@
   "env": {
     "browser": true
   },
-  "plugins": [
-    "import",
-    "react"
-  ],
+  "plugins": ["import", "react"],
   "extends": [
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:react/recommended"
-  ]
+  ],
+  "globals": {
+    "__DEV__": true
+  },
+  "settings": {
+    "react": {
+      "version": "15"
+    }
+  }
 }

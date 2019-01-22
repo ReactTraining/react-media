@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 export interface MediaQueryObject {
     [id: string]: boolean | number | string;
 }
