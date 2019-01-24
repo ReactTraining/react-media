@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Media from "../Media";
+import { renderStrict } from './utils';
 
 const createMockMediaMatcher = matchesOrMapOfMatches => qs => ({
   matches:
@@ -25,7 +25,7 @@ describe("A <Media> in browser environment", () => {
   let node;
 
   beforeEach(() => {
-    node = document.createElement("div");
+    node = document.createElement('div');
   });
 
   const queries = {
@@ -46,8 +46,8 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch("fully matched");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch("fully matched");
         });
       });
     });
@@ -63,8 +63,8 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch("fully matched");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch("fully matched");
         });
       });
     });
@@ -74,13 +74,13 @@ describe("A <Media> in browser environment", () => {
         const element = (
           <Media queries={queries}>
             {matches =>
-              matches.sm && matches.lg && <span>children as a function</span>
+              (matches.sm && matches.lg) ? <span>children as a function</span> : null
             }
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch("children as a function");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch("children as a function");
         });
       });
     });
@@ -96,14 +96,14 @@ describe("A <Media> in browser environment", () => {
           />
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch("render prop");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch("render prop");
         });
       });
     });
   });
 
-  describe("with a query that does not match", () => {
+  describe('with a query that does not match', () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(false);
     });
@@ -116,15 +116,15 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.innerHTML).not.toMatch("I am not rendered");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML || '').not.toMatch("I am not rendered");
         });
       });
     });
 
     describe("and a child component", () => {
       it("should not render anything", () => {
-        const Component = () => <span>I'm not rendered</span>;
+        const Component = () => <span>I am not rendered</span>;
 
         const element = (
           <Media queries={queries}>
@@ -132,8 +132,8 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.innerHTML).not.toMatch("I'm not rendered");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML || '').not.toMatch("I am not rendered");
         });
       });
     });
@@ -148,8 +148,8 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch("no matches at all");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch("no matches at all");
         });
       });
     });
@@ -160,7 +160,7 @@ describe("A <Media> in browser environment", () => {
 
         const element = <Media queries={queries} render={render} />;
 
-        ReactDOM.render(element, node, () => {
+        renderStrict(element, node, () => {
           expect(render).not.toBeCalled();
         });
       });
@@ -194,8 +194,8 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch("partially matched");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch("partially matched");
         });
       });
     });
@@ -211,8 +211,8 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch(
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch(
             "yep, something definetly matched"
           );
         });
@@ -230,8 +230,8 @@ describe("A <Media> in browser environment", () => {
           />
         );
 
-        ReactDOM.render(element, node, () => {
-          expect(node.firstChild.innerHTML).toMatch("please render me");
+        renderStrict(element, node, () => {
+          expect(node.innerHTML).toMatch("please render me");
         });
       });
     });
@@ -244,7 +244,7 @@ describe("A <Media> in browser environment", () => {
       window.matchMedia = createMockMediaMatcher(true);
     });
 
-    it("renders its child", () => {
+    it('renders its child', () => {
       const testWindow = {
         matchMedia: createMockMediaMatcher(false)
       };
@@ -255,13 +255,13 @@ describe("A <Media> in browser environment", () => {
         </Media>
       );
 
-      ReactDOM.render(element, node, () => {
-        expect(node.firstChild.innerHTML).toMatch(/goodbye/);
+      renderStrict(element, node, () => {
+        expect(node.innerHTML).toMatch(/goodbye/);
       });
     });
 
-    describe("when a non-window prop is passed for targetWindow", () => {
-      it("errors with a useful message", () => {
+    describe('when a non-window prop is passed for targetWindow', () => {
+      it('errors with a useful message', () => {
         const notAWindow = {};
 
         const element = (
@@ -271,22 +271,22 @@ describe("A <Media> in browser environment", () => {
         );
 
         expect(() => {
-          ReactDOM.render(element, node, () => {});
-        }).toThrow("does not support `matchMedia`");
+          renderStrict(element, node, () => {});
+        }).toThrow('does not support `matchMedia`');
       });
     });
   });
 
-  describe("when an onChange function is passed", () => {
+  describe('when an onChange function is passed', () => {
     beforeEach(() => {
       window.matchMedia = createMockMediaMatcher(true);
     });
 
-    it("calls the function with the match result", () => {
+    it('calls the function with the match result', () => {
       const callback = jest.fn();
       const element = <Media queries={{ matches: "" }} onChange={callback} />;
 
-      ReactDOM.render(element, node, () => {
+      renderStrict(element, node, () => {
         expect(callback).toHaveBeenCalledWith({ matches: true });
       });
     });
@@ -302,8 +302,8 @@ describe("A <Media> in browser environment", () => {
         {({ matches }) => matches ? <div>fully matched</div> : <div>not matched</div>}
       </Media>;
 
-      ReactDOM.render(element, node, () => {
-        expect(node.firstChild.innerHTML).toMatch('not matched');
+      renderStrict(element, node, () => {
+        expect(node.innerHTML).toMatch('not matched');
       });
     });
   })

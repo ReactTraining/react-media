@@ -1,7 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import invariant from "invariant";
-import json2mq from "json2mq";
+import React from 'react';
+import PropTypes from 'prop-types';
+import invariant from 'invariant';
+import json2mq from 'json2mq';
+
+import MediaQueryList from './MediaQueryList';
 
 const queryType = PropTypes.oneOfType([
   PropTypes.string,
@@ -72,8 +74,8 @@ class Media extends React.Component {
     const targetWindow = this.props.targetWindow || window;
 
     invariant(
-      typeof targetWindow.matchMedia === "function",
-      "<Media targetWindow> does not support `matchMedia`."
+      typeof targetWindow.matchMedia === 'function',
+      '<Media targetWindow> does not support `matchMedia`.'
     );
 
     const { queries } = this.props;
@@ -81,11 +83,9 @@ class Media extends React.Component {
     this.queries = Object.keys(queries).map(name => {
       const query = queries[name];
       const qs = typeof query !== "string" ? json2mq(query) : query;
-      const mqList = targetWindow.matchMedia(qs);
+      const mqList = new MediaQueryList(targetWindow, qs, this.updateMatches);
 
-      mqList.addListener(this.updateMatches);
-
-      return { name, qs, mqList };
+      return { name, mqList };
     });
   }
 
@@ -107,9 +107,7 @@ class Media extends React.Component {
   }
 
   componentWillUnmount() {
-    this.queries.forEach(({ mqList }) =>
-      mqList.removeListener(this.updateMatches)
-    );
+    this.queries.forEach(({ mqList }) => mqList.cancel());
   }
 
   render() {
@@ -123,7 +121,7 @@ class Media extends React.Component {
         ? render(matches)
         : null
       : children
-        ? typeof children === "function"
+        ? typeof children === 'function'
           ? children(matches)
           : // Preact defaults to empty children array
             !Array.isArray(children) || children.length
