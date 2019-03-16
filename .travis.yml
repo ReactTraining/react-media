@@ -21,7 +21,6 @@ jobs:
       skip_cleanup: true
       tag: "$NPM_TAG"
       email: npm@mjackson.me
-      api_key:
-        secure: Vh46fcq28yrIrhg4I72kPX1B+iZ6/b+2kZVtgYOvZLIpEGB0rsWgfIUqKAfmLX3oh9R72Vfu70mwdEZ4nkql2Qr+c5PaFXHUfTlSeuCiVaEriw2NK4iDRZ8fhMa0VpMd5Jm86Y3RyLUGr4AfAmikGzeijhH70ooZ+EGql39AwdIIktw7OtqopB3WxkMuV6UVmlG68067p65H/V4cf+Kzhy4XlxsGkKgxQ3jm1NgtEG5x9SrpYnOkfwcHo+GaoEvSXXY88WHkFA/YEj0fkeLbodeT2NFKx9cboo2rMB0n55khbfqgTnsUtSPRj1LJQDGMU7fuycC+/Xmb1sZmsKh39bDKgW1Qyw254j3ICMOp+5LGRlQRwzGFLlKup8fEnNevv1jo0znT0TtuNfdw9OENrCZeIHtZmf4dm+uSbpGIfG6T9UfoBhG6ya3O08J5eJCBVUoeHZZaxZ+ufRko2ucfFUx7m755TIsmP74RwF5FOBDTnZY6Hip11rpD32vNPfwAOQe0ra04QpYp5P4jSDUG9/194BKIUnOgFDq5C1JOXsNgOxQuQMiYD7jNkUWNPr1UidScaPhYTwvH+Yi7GkKb/oo49uuhuvOwojAMRpHrsfOKV3eb/vYRxR7tiyVRyYzw4JAkmBtNQEZ9ipqsM31YPIIek/bwKvLkn94+499P/Ks=
+      api_key: "$NPM_TOKEN"
       on:
         tags: true
