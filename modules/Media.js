@@ -57,7 +57,7 @@ class Media extends React.Component {
     if (typeof window !== "object") {
       // In case we're rendering on the server, apply the default matches
       let matches;
-      if (props.defaultMatches) {
+      if (props.defaultMatches !== undefined) {
         matches = props.defaultMatches;
       } else if (props.query) {
         matches = true;
