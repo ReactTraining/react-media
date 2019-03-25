@@ -1,4 +1,4 @@
-export default class MediaQueryList {
+export default class MediaQueryListener {
   constructor(targetWindow, query, listener) {
     this.nativeMediaQueryList = targetWindow.matchMedia(query);
     this.active = true;
