@@ -35,6 +35,8 @@ You can find the library on `window.ReactMedia`.
 
 ## Basic usage
 
+### queries
+
 Render a `<Media>` component with a `queries` prop whose value is an object,
 where each value is a valid
 [CSS media query](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries).
@@ -69,15 +71,42 @@ class App extends React.Component {
 }
 ```
 
-## Render props
+### query
 
-There are three props which allow you to render your content. They each serve a subtly different purpose.
+Alternatively, if you only need to match against a single media query, the `query` prop provides a less-verbose approach.
+More documentation about the difference betwen `query` and `queries` can be found below.
 
-|prop|description|example|
-|---|---|---|
-|render|Only invoked when **at least one** of the queries matches. This is a nice shorthand if you only want to render something for a matching query.|`<Media query={{ foo: ... }} render={() => <p>I matched!</p>} />`|
-|children (function)|Receives an object of booleans whose keys are the same as the `queries` prop, indicating whether each media query matched. Use this prop if you need to render different output for each of specified queries.|`<Media queries={{ foo: ... }}>{matches => matches.foo ? <p>I matched!</p> : <p>I didn't match</p>}</Media>`|
-|children (react element)|If you render a regular React element within `<Media>`, it will render that element when **at least one** of the queries matches. This method serves the same purpose as the `render` prop, however, you'll create component instances regardless of whether the queries match or not. Hence, using the `render` prop is preferred ([more info](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260)).|`<Media queries={{ ... }}><p>I matched!</p></Media>`|
+```jsx
+import React, { Fragment } from 'react';
+import Media from 'react-media';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Media query="(max-width: 599px)" render={() =>
+          (
+            <p>I am small!</p>
+          )}
+        />
+      </div>
+    );
+  }
+}
+```
+
+## `query` vs `queries`
+
+The `queries` prop was added to allow for multiple media queries to be matched without excessive nesting or other
+workarounds. The `query` prop was retained out of recognition that a single query covers many use cases, and there
+is already a lot of usage that would be a pain to migrate.
+
+The salient points:
+
+* **You cannot use them together**: if you do, the component will throw an error. This is to avoid confusion around
+precedence.
+* **The render methods differ slightly**: for the `queries` prop, the `render` and child JSX methods will render if
+**at least one** of the given queries is matched. The `query` prop renders if the given query matches.
 
 
 ## `queries`
@@ -125,6 +154,16 @@ class App extends React.Component {
 
 Keys of media query objects are camel-cased and numeric values automatically get the `px` suffix. See the [json2mq docs](https://github.com/akiran/json2mq/blob/master/README.md#usage) for more examples of queries you can construct using objects.
 
+### Render props
+
+There are three props which allow you to render your content. They each serve a subtly different purpose.
+
+|prop|description|example|
+|---|---|---|
+|render|Only invoked when **at least one** of the queries matches. This is a nice shorthand if you only want to render something for a matching query.|`<Media queries={{ foo: ... }} render={() => <p>I matched!</p>} />`|
+|children (function)|Receives an object of booleans whose keys are the same as the `queries` prop, indicating whether each media query matched. Use this prop if you need to render different output for each of specified queries.|`<Media queries={{ foo: ... }}>{matches => matches.foo ? <p>I matched!</p> : <p>I didn't match</p>}</Media>`|
+|children (react element)|If you render a regular React element within `<Media>`, it will render that element when **at least one** of the queries matches. This method serves the same purpose as the `render` prop, however, you'll create component instances regardless of whether the queries match or not. Hence, using the `render` prop is preferred ([more info](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260)).|`<Media queries={{ ... }}><p>I matched!</p></Media>`|
+
 ## `query`
 
 In addition to passing a valid media query string, the `query` prop will also accept an object, similar to [React's built-in support for inline style objects](https://facebook.github.io/react/tips/inline-styles.html) in e.g. `<div style>`. These objects are converted to CSS media queries via [json2mq](https://github.com/akiran/json2mq/blob/master/README.md#usage).
@@ -165,6 +204,16 @@ class App extends React.Component {
 ```
 
 Keys of media query objects are camel-cased and numeric values automatically get the `px` suffix. See the [json2mq docs](https://github.com/akiran/json2mq/blob/master/README.md#usage) for more examples of queries you can construct using objects.
+
+### Render props
+
+There are three props which allow you to render your content. They each serve a subtly different purpose.
+
+|prop|description|example|
+|---|---|---|
+|render|Only invoked when the query matches. This is a nice shorthand if you only want to render something for a matching query.|`<Media query="..." render={() => <p>I matched!</p>} />`|
+|children (function)|Receives a single boolean element, indicating whether the media query matched. Use this prop if you need to render something when the query doesn't match.|`<Media query="...">{matches => matches ? <p>I matched!</p> : <p>I didn't match</p>}</Media>`|
+|children (react element)|If you render a regular React element within `<Media>`, it will render that element when the query matches. This method serves the same purpose as the `render` prop, however, you'll create component instances regardless of whether the query matches or not. Hence, using the `render` prop is preferred ([more info](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260)).|`<Media query="..."><p>I matched!</p></Media>`|
 
 ## `onChange`
 
