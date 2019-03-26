@@ -222,10 +222,6 @@ initialState = {
 
 An optional `targetWindow` prop can be specified if you want the `queries` to be evaluated against a different window object than the one the code is running in. This can be useful if you are rendering part of your component tree to an iframe or [a popup window](https://hackernoon.com/using-a-react-16-portal-to-do-something-cool-2a2d627b0202). See [this PR thread](https://github.com/ReactTraining/react-media/pull/78) for context.
 
-## Compared to react-responsive
-
-If you're curious about how react-media differs from [react-responsive](https://github.com/contra/react-responsive), please see [this comment](https://github.com/ReactTraining/react-media/issues/70#issuecomment-347774260).
-
 ## About
 
 `react-media` is developed and maintained by [React Training](https://reacttraining.com). If you're interested in learning more about what React can do for your company, please [get in touch](mailto:hello@reacttraining.com)!
