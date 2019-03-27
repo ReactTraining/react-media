@@ -28,7 +28,8 @@ class Media extends React.Component {
     }
   };
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     if (typeof window !== 'object') return;
 
     const targetWindow = this.props.targetWindow || window;
