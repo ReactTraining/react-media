@@ -1,6 +1,6 @@
 {
   "name": "react-media",
-  "version": "1.10.0-alpha.0",
+  "version": "1.10.0-alpha.1",
   "description": "CSS media queries for React",
   "repository": "ReactTraining/react-media",
   "license": "MIT",
