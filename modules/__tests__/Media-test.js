@@ -6,8 +6,8 @@ import { renderStrict, serverRenderStrict } from './utils';
 function createMockMediaMatcher(matches) {
   return () => ({
     matches,
-    addListener: () => {},
-    removeListener: () => {}
+    addEventListener: () => {},
+    removeEventListener: () => {}
   });
 }
 
