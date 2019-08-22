@@ -12,12 +12,12 @@ export default class MediaQueryList {
         listener(...args);
       }
     };
-    this.nativeMediaQueryList.addEventListener("change", this.cancellableListener);
+    this.nativeMediaQueryList.addListener(this.cancellableListener);
     this.matches = this.nativeMediaQueryList.matches;
   }
 
   cancel() {
     this.active = false;
-    this.nativeMediaQueryList.removeEventListener("change", this.cancellableListener);
+    this.nativeMediaQueryList.removeListener(this.cancellableListener);
   }
 }
