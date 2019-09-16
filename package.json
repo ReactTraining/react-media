@@ -1,6 +1,6 @@
 {
   "name": "react-media",
-  "version": "1.9.2",
+  "version": "1.10.0-alpha.1",
   "description": "CSS media queries for React",
   "repository": "ReactTraining/react-media",
   "license": "MIT",
@@ -20,7 +20,8 @@
     "prepublishOnly": "npm run build",
     "clean": "git clean -fdX .",
     "lint": "eslint modules",
-    "test": "jest"
+    "test": "jest",
+    "testTypes": "tsc --noEmit --jsx react typeTest.tsx"
   },
   "peerDependencies": {
     "react": ">=15 || ^0.14.7"
@@ -38,15 +39,24 @@
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
+    "@types/react": "^16.8.18",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.12",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-1": "^6.5.0",
     "eslint": "^5.9.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^22.1.0",
     "eslint-plugin-react": "^7.11.1",
+    "gzip-size": "^3.0.0",
     "jest": "^23.6.0",
+    "pascal-case": "^2.0.1",
+    "pretty-bytes": "^4.0.2",
     "react": "^15.4.1 || ^0.14.7",
     "react-dom": "^15.3.0 || ^0.14.7",
     "rollup": "^0.67.3",
@@ -55,7 +65,8 @@
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-size-snapshot": "^0.7.0",
-    "rollup-plugin-uglify": "^6.0.0"
+    "rollup-plugin-uglify": "^6.0.0",
+    "typescript": "^3.4.5"
   },
   "keywords": [
     "react",
