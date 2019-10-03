@@ -74,7 +74,7 @@ class App extends React.Component {
 ### query
 
 Alternatively, if you only need to match against a single media query, the `query` prop provides a less-verbose approach.
-More documentation about the difference betwen `query` and `queries` can be found below.
+More documentation about the difference between `query` and `queries` can be found below.
 
 ```jsx
 import React, { Fragment } from 'react';
