@@ -28,6 +28,8 @@ class Media extends React.Component {
     onChange: PropTypes.func
   };
 
+  _mounted = false;
+
   queries = [];
 
   constructor(props) {
@@ -98,14 +100,11 @@ class Media extends React.Component {
   };
 
   updateMatches = () => {
-    const newMatches = this.getMatches();
+    const matches = this.getMatches();
 
-    this.setState(
-      () => ({
-        matches: newMatches
-      }),
-      this.onChange
-    );
+    if (this._mounted) {
+      this.setState({matches}, this.onChange);
+    }
   };
 
   initialize() {
@@ -132,6 +131,7 @@ class Media extends React.Component {
   }
 
   componentDidMount() {
+    this._mounted = true;
     this.initialize();
     // If props.defaultMatches has been set, ensure we trigger a two-pass render.
     // This is useful for SSR with mismatching defaultMatches vs actual matches from window.matchMedia
@@ -149,6 +149,7 @@ class Media extends React.Component {
   }
 
   componentWillUnmount() {
+    this._mounted = false;
     this.queries.forEach(({ mqListener }) => mqListener.cancel());
   }
 
