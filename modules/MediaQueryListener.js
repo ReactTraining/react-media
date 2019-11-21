@@ -1,3 +1,10 @@
+const createListener = (nativeMediaQueryList, matches, active, listener) => (...args) => {
+  matches = nativeMediaQueryList.matches;
+  if (active) {
+    listener(...args);
+  }
+}
+
 export default class MediaQueryListener {
   constructor(targetWindow, query, listener) {
     this.nativeMediaQueryList = targetWindow.matchMedia(query);
@@ -6,12 +13,7 @@ export default class MediaQueryListener {
     // when the listener is already waiting in the event queue.
     // Having an active flag to make sure the listener is not called
     // after we removeListener.
-    this.cancellableListener = (...args) => {
-      this.matches = this.nativeMediaQueryList.matches;
-      if (this.active) {
-        listener(...args);
-      }
-    };
+    this.cancellableListener = createListener(this.nativeMediaQueryList, this.matches, this.active, listener);
     this.nativeMediaQueryList.addListener(this.cancellableListener);
     this.matches = this.nativeMediaQueryList.matches;
   }
