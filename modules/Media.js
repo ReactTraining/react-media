@@ -47,34 +47,20 @@ const unwrapSingleQuery = queryObject => {
   return queryObject;
 };
 
-/**
- * Conditionally renders based on whether or not a media query matches.
- */
-const Media = ({
-  defaultMatches,
-  query,
-  queries,
-  render,
-  children,
-  targetWindow,
-  onChange,
-}) => {
+export const useMedia = ({ query, queries, defaultMatches, targetWindow, onChange }) => {
   checkInvariants({ query, queries, defaultMatches });
-  // unclear - should this be a ref? module-defined?
   const activeQueries = useRef([]);
-  // TODO: figure out initial value here.
   const getMatches = () => {
     const result = activeQueries.current.reduce(
       (acc, { name, mqListener }) => ({ ...acc, [name]: mqListener.matches }),
-      {}
+      {},
     );
 
     // return result;
     return unwrapSingleQuery(result);
   };
   const updateMatches = () => {
-    const newMatches = getMatches();
-    setMatches(newMatches);
+    setMatches(getMatches());
   };
 
   const setUpMQLs = () => {
@@ -101,6 +87,10 @@ const Media = ({
   };
 
   const [matches, setMatches] = useState(() => {
+    // If props.defaultMatches has been set, ensure we trigger a two-pass render.
+    // This is useful for SSR with mismatching defaultMatches vs actual matches from window.matchMedia
+    // Details: https://github.com/ReactTraining/react-media/issues/81
+    // TODO: figure out whether this is still technically a two-pass render.
     if (typeof window !== "object") {
       // In case we're rendering on the server, apply the default matches
       if (defaultMatches !== undefined) {
@@ -122,10 +112,6 @@ const Media = ({
 
 
   useEffect(
-    // If props.defaultMatches has been set, ensure we trigger a two-pass render.
-    // This is useful for SSR with mismatching defaultMatches vs actual matches from window.matchMedia
-    // Details: https://github.com/ReactTraining/react-media/issues/81
-    // TODO: figure out whether this is still technically a two-pass render.
     // Because setup happens in the state constructor, cleanup is the only thing that
     // useEffect is responsible for.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -143,6 +129,22 @@ const Media = ({
     },
     [matches, onChange],
   );
+  return matches;
+};
+
+/**
+ * Conditionally renders based on whether or not a media query matches.
+ */
+const Media = ({
+  defaultMatches,
+  query,
+  queries,
+  render,
+  children,
+  targetWindow,
+  onChange,
+}) => {
+  const matches = useMedia({ query, queries, defaultMatches, targetWindow, onChange });
 
   // render
   const isAnyMatches =
