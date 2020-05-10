@@ -2,6 +2,7 @@ import React from "react";
 import Media from "../Media";
 import { renderStrict } from "./utils";
 
+// TODO: Bleh. this stuff is going to need to be rewritten.
 const createMockMediaMatcher = matchesOrMapOfMatches => qs => ({
   matches:
     typeof matchesOrMapOfMatches === "object"
@@ -22,12 +23,6 @@ describe("A <Media> in browser environment", () => {
     window.matchMedia = originalMatchMedia;
   });
 
-  let node;
-
-  beforeEach(() => {
-    node = document.createElement("div");
-  });
-
   const queries = {
     sm: "(max-width: 1000px)",
     lg: "(max-width: 2000px)"
@@ -40,15 +35,13 @@ describe("A <Media> in browser environment", () => {
 
     describe("and a child DOM element", () => {
       it("should render child", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media query={queries.sm}>
             <div>matched</div>
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("matched");
-        });
+        expect(container.innerHTML).toMatch("matched");
       });
     });
 
@@ -57,21 +50,19 @@ describe("A <Media> in browser environment", () => {
         const Component = props =>
           props.matches === true && <span>matched</span>;
 
-        const element = (
+        const { container } = renderStrict(
           <Media query={queries.sm}>
             <Component />
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("matched");
-        });
+        expect(container.innerHTML).toMatch("matched");
       });
     });
 
     describe("and a children function", () => {
       it("should render its children function call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media query={queries.sm}>
             {matches =>
               matches === true ? <span>children as a function</span> : null
@@ -79,24 +70,20 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("children as a function");
-        });
+        expect(container.innerHTML).toMatch("children as a function");
       });
     });
 
     describe("and a render prop", () => {
       it("should render `render` prop call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media
             query={queries.sm}
             render={matches => matches === true && <span>render prop</span>}
           />
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("render prop");
-        });
+        expect(container.innerHTML).toMatch("render prop");
       });
     });
   });
@@ -108,15 +95,13 @@ describe("A <Media> in browser environment", () => {
 
     describe("and a child DOM element", () => {
       it("should render child", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             <div>fully matched</div>
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("fully matched");
-        });
+        expect(container.innerHTML).toMatch("fully matched");
       });
     });
 
@@ -125,21 +110,19 @@ describe("A <Media> in browser environment", () => {
         const Component = props =>
           props.matches.sm && props.matches.lg && <span>fully matched</span>;
 
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             <Component />
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("fully matched");
-        });
+        expect(container.innerHTML).toMatch("fully matched");
       });
     });
 
     describe("and a children function", () => {
       it("should render its children function call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             {matches =>
               matches.sm && matches.lg ? (
@@ -149,15 +132,13 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("children as a function");
-        });
+        expect(container.innerHTML).toMatch("children as a function");
       });
     });
 
     describe("and a render prop", () => {
       it("should render `render` prop call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media
             queries={queries}
             render={matches =>
@@ -166,9 +147,7 @@ describe("A <Media> in browser environment", () => {
           />
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("render prop");
-        });
+        expect(container.innerHTML).toMatch("render prop");
       });
     });
   });
@@ -180,15 +159,13 @@ describe("A <Media> in browser environment", () => {
 
     describe("and a child DOM element", () => {
       it("should not render anything", () => {
-        const element = (
+        const { container } = (
           <Media query={queries.sm}>
             <div>I am not rendered</div>
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML || "").not.toMatch("I am not rendered");
-        });
+        expect(container).toBeUndefined();
       });
     });
 
@@ -196,29 +173,25 @@ describe("A <Media> in browser environment", () => {
       it("should not render anything", () => {
         const Component = () => <span>I am not rendered</span>;
 
-        const element = (
+        const { container } = (
           <Media query={queries.sm}>
             <Component />
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML || "").not.toMatch("I am not rendered");
-        });
+        expect(container).toBeUndefined();
       });
     });
 
     describe("and a children function", () => {
       it("should render children function call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media query={queries.sm}>
             {matches => matches === false && <span>no matches at all</span>}
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("no matches at all");
-        });
+        expect(container.innerHTML).toMatch("no matches at all");
       });
     });
 
@@ -226,11 +199,9 @@ describe("A <Media> in browser environment", () => {
       it("should not call render prop at all", () => {
         const render = jest.fn();
 
-        const element = <Media query={queries.sm} render={render} />;
+        renderStrict(<Media query={queries.sm} render={render} />);
 
-        renderStrict(element, node, () => {
-          expect(render).not.toBeCalled();
-        });
+        expect(render).not.toBeCalled();
       });
     });
   });
@@ -242,15 +213,13 @@ describe("A <Media> in browser environment", () => {
 
     describe("and a child DOM element", () => {
       it("should not render anything", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             <div>I am not rendered</div>
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML || "").not.toMatch("I am not rendered");
-        });
+        expect(container.innerHTML || "").not.toMatch("I am not rendered");
       });
     });
 
@@ -258,21 +227,19 @@ describe("A <Media> in browser environment", () => {
       it("should not render anything", () => {
         const Component = () => <span>I am not rendered</span>;
 
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             <Component />
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML || "").not.toMatch("I am not rendered");
-        });
+        expect(container.innerHTML || "").not.toMatch("I am not rendered");
       });
     });
 
     describe("and a children function", () => {
       it("should render children function call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             {matches =>
               !matches.sm && !matches.lg && <span>no matches at all</span>
@@ -280,9 +247,7 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("no matches at all");
-        });
+        expect(container.innerHTML).toMatch("no matches at all");
       });
     });
 
@@ -290,11 +255,9 @@ describe("A <Media> in browser environment", () => {
       it("should not call render prop at all", () => {
         const render = jest.fn();
 
-        const element = <Media queries={queries} render={render} />;
+        renderStrict(<Media queries={queries} render={render} />);
 
-        renderStrict(element, node, () => {
-          expect(render).not.toBeCalled();
-        });
+        expect(render).not.toBeCalled();
       });
     });
   });
@@ -320,21 +283,19 @@ describe("A <Media> in browser environment", () => {
           props.matches.sm &&
           !props.matches.lg && <span>partially matched</span>;
 
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             <Component />
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("partially matched");
-        });
+        expect(container.innerHTML).toMatch("partially matched");
       });
     });
 
     describe("and a children function", () => {
       it("should render children function call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media queries={queries}>
             {matches =>
               matches.sm &&
@@ -343,15 +304,13 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("yep, something definitely matched");
-        });
+        expect(container.innerHTML).toMatch("yep, something definitely matched");
       });
     });
 
     describe("and a render prop", () => {
       it("should render `render` prop call result", () => {
-        const element = (
+        const { container } = renderStrict(
           <Media
             queries={queries}
             render={matches =>
@@ -360,9 +319,7 @@ describe("A <Media> in browser environment", () => {
           />
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("please render me");
-        });
+        expect(container.innerHTML).toMatch("please render me");
       });
     });
   });
@@ -379,15 +336,13 @@ describe("A <Media> in browser environment", () => {
         matchMedia: createMockMediaMatcher(false)
       };
 
-      const element = (
+      const { container } = renderStrict(
         <Media queries={queries} targetWindow={testWindow}>
           {({ matches }) => (matches ? <div>hello</div> : <div>goodbye</div>)}
         </Media>
       );
 
-      renderStrict(element, node, () => {
-        expect(node.innerHTML).toMatch(/goodbye/);
-      });
+      expect(container.innerHTML).toMatch(/goodbye/);
     });
 
     describe("when a non-window prop is passed for targetWindow", () => {
@@ -400,9 +355,7 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        expect(() => {
-          renderStrict(element, node, () => {});
-        }).toThrow("does not support `matchMedia`");
+        expect(() => renderStrict(element)).toThrow("does not support `matchMedia`");
       });
     });
   });
@@ -414,11 +367,9 @@ describe("A <Media> in browser environment", () => {
 
     it("calls the function with the match result", () => {
       const callback = jest.fn();
-      const element = <Media queries={{ matches: "" }} onChange={callback} />;
+      renderStrict(<Media queries={{ matches: "" }} onChange={callback} />);
 
-      renderStrict(element, node, () => {
-        expect(callback).toHaveBeenCalledWith({ matches: true });
-      });
+      expect(callback).toHaveBeenCalledWith({ matches: true });
     });
   });
 
@@ -429,7 +380,7 @@ describe("A <Media> in browser environment", () => {
 
     describe("for a single query", () => {
       it("initially overwrites defaultMatches with matches from matchMedia", async () => {
-        const element = (
+        const { container } = renderStrict(
           <Media query="(min-width: 1000px)" defaultMatches={true}>
             {matches =>
               matches === true ? (
@@ -441,15 +392,13 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("not matched");
-        });
+        expect(container.innerHTML).toMatch("not matched");
       });
     });
 
     describe("for multiple queries", () => {
       it("initially overwrites defaultMatches with matches from matchMedia", async () => {
-        const element = (
+        const { container } = renderStrict(
           <Media queries={{ matches: "(min-width: 1000px)" }} defaultMatches={{ matches: true }}>
             {({ matches }) =>
               matches ? <div>fully matched</div> : <div>not matched</div>
@@ -457,9 +406,7 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
-        renderStrict(element, node, () => {
-          expect(node.innerHTML).toMatch("not matched");
-        });
+        expect(container.innerHTML).toMatch("not matched");
       });
     });
   });
