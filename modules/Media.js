@@ -150,24 +150,37 @@ const Media = ({
       ? Object.keys(matches).some(key => matches[key])
       : matches;
 
-  return render
-    ?  isAnyMatches
-      ?  render(matches)
-      : null
-    : children
-    ? typeof children === "function"
-      ? children(matches)
-      : !Array.isArray(children) || children.length // Preact defaults to empty children array
-      ? isAnyMatches
-        ? // We have to check whether child is a composite component or not to decide should we
-          // provide `matches` as a prop or not
-          React.Children.only(children) &&
-          typeof React.Children.only(children).type === "string"
-          ? React.Children.only(children)
-          : React.cloneElement(React.Children.only(children), { matches })
+  return (
+    render
+    ? (
+      isAnyMatches
+        ? render(matches)
         : null
-      : null
-    : null;
+    )
+    : (
+      children
+        ? (
+          typeof children === "function"
+            ? children(matches)
+            : (
+              (!Array.isArray(children) || children.length) // Preact defaults to empty children array
+                ? (isAnyMatches
+                  // We have to check whether child is a composite component or not to decide should we
+                  // provide `matches` as a prop or not
+                  ? (
+                    (React.Children.only(children)
+                    && typeof React.Children.only(children).type === "string")
+                      ? React.Children.only(children)
+                      : React.cloneElement(React.Children.only(children), { matches })
+                  )
+                  : null
+                )
+                : null
+            )
+        )
+        : null
+    )
+  );
 }
 
 const queryType = PropTypes.oneOfType([
