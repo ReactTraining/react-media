@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from '@testing-library/react';
 import ReactDOMServer from 'react-dom/server';
 
 let StrictMode = function(props) {
@@ -10,9 +10,8 @@ if (React.StrictMode) {
   StrictMode = React.StrictMode;
 }
 
-export function renderStrict(element, node, callback) {
-  ReactDOM.render(<StrictMode>{element}</StrictMode>, node);
-  callback();
+export function renderStrict(element) {
+  return render(<StrictMode>{element}</StrictMode>);
 }
 
 export function serverRenderStrict(element) {
