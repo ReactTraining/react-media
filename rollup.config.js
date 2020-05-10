@@ -1,9 +1,9 @@
-import babel from 'rollup-plugin-babel';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
-import nodeResolve from 'rollup-plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+import replace from '@rollup/plugin-replace';
+import commonjs from '@rollup/plugin-commonjs';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
-import { uglify } from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
@@ -21,7 +21,7 @@ const cjs = [
     output: { file: `cjs/${pkg.name}.js`, format: 'cjs', exports: 'named' },
     external,
     plugins: [
-      babel({ exclude: /node_modules/ }),
+      babel({ exclude: /node_modules/, babelHelpers: 'bundled' }),
       replace({ 'process.env.NODE_ENV': JSON.stringify('development') })
     ]
   },
@@ -31,9 +31,9 @@ const cjs = [
     output: { file: `cjs/${pkg.name}.min.js`, format: 'cjs', exports: 'named' },
     external,
     plugins: [
-      babel({ exclude: /node_modules/ }),
+      babel({ exclude: /node_modules/, babelHelpers: 'bundled' }),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      uglify()
+      terser()
     ]
   }
 ];
@@ -41,12 +41,12 @@ const cjs = [
 const esm = [
   {
     input,
-    output: { file: `esm/${pkg.name}.js`, format: 'esm' },
+    output: { file: `esm/${pkg.name}.js`, format: 'esm', exports: 'named' },
     external,
     plugins: [
       babel({
         exclude: /node_modules/,
-        runtimeHelpers: true,
+        babelHelpers: 'runtime',
         plugins: [['@babel/transform-runtime', { useESModules: true }]]
       }),
       sizeSnapshot()
@@ -61,13 +61,14 @@ const umd = [
       file: `umd/${pkg.name}.js`,
       format: 'umd',
       name: globalName,
+      exports: 'named',
       globals
     },
     external: Object.keys(globals),
     plugins: [
       babel({
         exclude: /node_modules/,
-        runtimeHelpers: true,
+        babelHelpers: 'runtime',
         plugins: [['@babel/transform-runtime', { useESModules: true }]]
       }),
       nodeResolve(),
@@ -85,13 +86,14 @@ const umd = [
       file: `umd/${pkg.name}.min.js`,
       format: 'umd',
       name: globalName,
+      exports: 'named',
       globals
     },
     external: Object.keys(globals),
     plugins: [
       babel({
         exclude: /node_modules/,
-        runtimeHelpers: true,
+        babelHelpers: 'runtime',
         plugins: [['@babel/transform-runtime', { useESModules: true }]]
       }),
       nodeResolve(),
@@ -100,7 +102,7 @@ const umd = [
       }),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       sizeSnapshot(),
-      uglify()
+      terser()
     ]
   }
 ];
