@@ -2,7 +2,6 @@ import React from "react";
 import Media from "../Media";
 import { renderStrict } from "./utils";
 
-// TODO: Bleh. this stuff is going to need to be rewritten.
 const createMockMediaMatcher = matchesOrMapOfMatches => qs => ({
   matches:
     typeof matchesOrMapOfMatches === "object"
