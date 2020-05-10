@@ -18,7 +18,7 @@ function external(id) {
 const cjs = [
   {
     input,
-    output: { file: `cjs/${pkg.name}.js`, format: 'cjs' },
+    output: { file: `cjs/${pkg.name}.js`, format: 'cjs', exports: 'named' },
     external,
     plugins: [
       babel({ exclude: /node_modules/ }),
@@ -28,7 +28,7 @@ const cjs = [
 
   {
     input,
-    output: { file: `cjs/${pkg.name}.min.js`, format: 'cjs' },
+    output: { file: `cjs/${pkg.name}.min.js`, format: 'cjs', exports: 'named' },
     external,
     plugins: [
       babel({ exclude: /node_modules/ }),
