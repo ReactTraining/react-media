@@ -1,26 +1,26 @@
 {
   "esm/react-media.js": {
-    "bundled": 8066,
-    "minified": 4215,
-    "gzipped": 1360,
+    "bundled": 7886,
+    "minified": 3440,
+    "gzipped": 1242,
     "treeshaked": {
       "rollup": {
-        "code": 3016,
-        "import_statements": 322
+        "code": 364,
+        "import_statements": 187
       },
       "webpack": {
-        "code": 4345
+        "code": 3673
       }
     }
   },
   "umd/react-media.js": {
-    "bundled": 39317,
-    "minified": 12555,
-    "gzipped": 4351
+    "bundled": 38874,
+    "minified": 11936,
+    "gzipped": 4233
   },
   "umd/react-media.min.js": {
-    "bundled": 15687,
-    "minified": 5539,
-    "gzipped": 2274
+    "bundled": 15247,
+    "minified": 5098,
+    "gzipped": 2186
   }
 }
