@@ -1,7 +1,15 @@
 {
-  "presets": [["@babel/env", { "loose": true }], "@babel/react"],
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "loose": true
+      }
+    ],
+    "@babel/react"
+  ],
   "plugins": [
-    "@babel/proposal-export-default-from",
+    "@babel/plugin-proposal-export-default-from",
     "dev-expression"
   ]
 }
