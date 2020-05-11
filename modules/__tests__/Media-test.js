@@ -47,6 +47,7 @@ describe("A <Media> in browser environment", () => {
     describe("and a child component", () => {
       it("should render child and provide matches as a prop", () => {
         const Component = props =>
+          // eslint-disable-next-line react/prop-types
           props.matches === true && <span>matched</span>;
 
         const { container } = renderStrict(
@@ -107,6 +108,7 @@ describe("A <Media> in browser environment", () => {
     describe("and a child component", () => {
       it("should render child and provide matches as a prop", () => {
         const Component = props =>
+          // eslint-disable-next-line react/prop-types
           props.matches.sm && props.matches.lg && <span>fully matched</span>;
 
         const { container } = renderStrict(
@@ -278,9 +280,11 @@ describe("A <Media> in browser environment", () => {
 
     describe("and a child component", () => {
       it("should render child and provide matches as a prop", () => {
+        /* eslint-disable react/prop-types */
         const Component = props =>
           props.matches.sm &&
           !props.matches.lg && <span>partially matched</span>;
+        /* eslint-enable */
 
         const { container } = renderStrict(
           <Media queries={queries}>
