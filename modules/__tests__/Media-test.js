@@ -358,7 +358,15 @@ describe("A <Media> in browser environment", () => {
           </Media>
         );
 
+        jest.spyOn(console, 'error')
+        /* eslint-disable no-console */
+        // This is to prevent stderr output from jsdom from showing up
+        // in the test output for this particular test.
+        console.error.mockImplementation(() => {})
+
         expect(() => renderStrict(element)).toThrow("does not support `matchMedia`");
+        console.error.mockRestore()
+        /* eslint-enable */
       });
     });
   });
