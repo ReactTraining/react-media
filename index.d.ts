@@ -62,5 +62,8 @@ export type SingleQueryProps = BaseProps & {
 export default function Media(props: SingleQueryProps): React.ReactElement;
 export default function Media<Q>(props: MultiQueryProps<Q>): React.ReactElement;
 
-type UseMediaProps<Q> = SingleQueryProps | MultiQueryProps<Q>;
-export function useMedia<Q>(props: UseMediaProps<Q>): QueryResults<Q>;
+type UseMediaSingleQueryProps = Omit<SingleQueryProps, 'render' | 'children'>
+type UseMediaMultiQueryProps<Q> = Omit<MultiQueryProps<Q>, 'render' | 'children'>
+
+export function useMedia(props: SingleQueryProps): boolean;
+export function useMedia<Q>(props: UseMediaMultiQueryProps<Q>): QueryResults<Q>;
