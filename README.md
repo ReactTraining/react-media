@@ -33,42 +33,42 @@ The UMD build is also available on [unpkg](https://unpkg.com):
 
 You can find the library on `window.ReactMedia`.
 
-## Hooks are coming soon !
+## Hooks are coming soon!
 
-Hooks are available in 2.X branch
+Hooks are available in 2.X branch.
 
-Install react-media@next to get it.
+Install `react-media@next` to get it.
 
-useMedia accepts a single options argument to handle both single and multiplie queries, so the same properties as Media are available (except of course render and children props).
+`useMedia` accepts a single options argument to handle both single and multiplie queries, so the same properties as Media are available (except of course render and children props).
 
 
-Simple usage with multiple queries : 
+Simple usage with multiple queries:
 
 ```tsx
-import { useMedia } from 'react-media'
+import { useMedia } from 'react-media';
 
 const GLOBAL_MEDIA_QUERIES = {
     small: "(max-width: 599px)",
     medium: "(min-width: 600px) and (max-width: 1199px)",
     large: "(min-width: 1200px)"
-}
-const matches = useMedia({ queries: GLOBAL_MEDIA_QUERIES })
+};
+const matches = useMedia({ queries: GLOBAL_MEDIA_QUERIES });
 
-const marginBottom = matches.large ? 0 : 10
+const marginBottom = matches.large ? 0 : 10;
 ```
 
 With single query : 
 
 ```tsx
-import { useMedia } from 'react-media'
+import { useMedia } from 'react-media';
 
 const GLOBAL_MEDIA_QUERIES = {
     small: "(max-width: 599px)",
     medium: "(min-width: 600px) and (max-width: 1199px)",
     large: "(min-width: 1200px)"
-}
+};
 
-const isSmallScreen = useMedia({ query: "(max-width: 599px)" })
+const isSmallScreen = useMedia({ query: "(max-width: 599px)" });
 
 ```
 
