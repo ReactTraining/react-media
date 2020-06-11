@@ -33,6 +33,42 @@ The UMD build is also available on [unpkg](https://unpkg.com):
 
 You can find the library on `window.ReactMedia`.
 
+## Hooks are coming soon !
+
+Hooks are available in 2.X branch
+
+Install react-media@next to get it.
+
+Simple usage with multiple queries : 
+
+```tsx
+import { useMedia } from 'react-media'
+
+const GLOBAL_MEDIA_QUERIES = {
+    small: "(max-width: 599px)",
+    medium: "(min-width: 600px) and (max-width: 1199px)",
+    large: "(min-width: 1200px)"
+}
+const matches = useMedia({ queries: GLOBAL_MEDIA_QUERIES })
+
+const marginBottom = matches.large ? 0 : 10
+```
+
+With single query : 
+
+```tsx
+import { useMedia } from 'react-media'
+
+const GLOBAL_MEDIA_QUERIES = {
+    small: "(max-width: 599px)",
+    medium: "(min-width: 600px) and (max-width: 1199px)",
+    large: "(min-width: 1200px)"
+}
+
+const isSmallScreen = useMedia({ query: "(max-width: 599px)" })
+
+```
+
 ## Basic usage
 
 ### queries
