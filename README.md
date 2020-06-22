@@ -39,7 +39,7 @@ Hooks are available in 2.X branch.
 
 Install `react-media@next` to get it.
 
-`useMedia` accepts a single options argument to handle both single and multiplie queries, so the same properties as Media are available (except of course render and children props).
+`useMedia` accepts a single options argument to handle both single and multiple queries, so the same properties as Media are available (except of course render and children props).
 
 
 Simple usage with multiple queries:
